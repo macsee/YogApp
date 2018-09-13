@@ -12,11 +12,12 @@ import {
 
 class Alumnos extends Component {
   state = {
-    redirect: false
+    redirect: false,
+    id: ""
   };
 
-  click = () => {
-    this.setState({ redirect: true });
+  click = id => {
+    this.setState({ redirect: true, id: id });
   };
 
   render() {
@@ -26,18 +27,16 @@ class Alumnos extends Component {
     return (
       <div className="card">
         <div className="card-body">
-          <div className="d-flex align-items-center">
-            <div>
-              <h4 className="card-title mb-0">Alumnos</h4>
-            </div>
-            <div className="offset-md-9 offset-s-9">
-              <button
-                className="btn btn-primary waves-effect waves-light"
-                type="button"
-              >
-                <i className="mdi mdi-playlist-plus" />
-              </button>
-            </div>
+          <div className="float-left">
+            <h4 className="card-title mb-0">Alumnos</h4>
+          </div>
+          <div className="float-right">
+            <button
+              className="btn btn-info waves-effect waves-light"
+              type="button"
+            >
+              <i className="mdi mdi-playlist-plus" /> Nuevo
+            </button>
           </div>
         </div>
 
@@ -52,7 +51,7 @@ class Alumnos extends Component {
               </tr>
             </thead>
             <tbody>
-              <tr onClick={this.click}>
+              <tr className="row-click" onClick={this.click}>
                 <td className="txt-oflo">1 </td>
                 <td>
                   <span className="txt-oflo">Juan Perez</span>
@@ -66,7 +65,7 @@ class Alumnos extends Component {
                   </span>
                 </td>
               </tr>
-              <tr onClick={() => this.showModal(this.state.id)}>
+              <tr onClick={this.click}>
                 <td className="txt-oflo">2 </td>
                 <td>
                   <span className="txt-oflo">Martin Suarez</span>
@@ -80,7 +79,7 @@ class Alumnos extends Component {
                   </span>
                 </td>
               </tr>
-              <tr onClick={() => this.showModal(this.state.id)}>
+              <tr onClick={this.click}>
                 <td className="txt-oflo">3 </td>
                 <td>
                   <span className="txt-oflo">Roberto Sanchez</span>
@@ -94,7 +93,7 @@ class Alumnos extends Component {
                   </span>
                 </td>
               </tr>
-              <tr onClick={() => this.showModal(this.state.id)}>
+              <tr onClick={this.click}>
                 <td className="txt-oflo">4 </td>
                 <td>
                   <span className="txt-oflo">Esteban Quito</span>
@@ -108,7 +107,7 @@ class Alumnos extends Component {
                   </span>
                 </td>
               </tr>
-              <tr onClick={() => this.showModal(this.state.id)}>
+              <tr onClick={this.click}>
                 <td className="txt-oflo">5 </td>
                 <td>
                   <span className="txt-oflo">Jose Guardiola</span>

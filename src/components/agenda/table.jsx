@@ -23,18 +23,16 @@ class Table extends Component {
         </div>
         <div className="card">
           <div className="card-body">
-            <div className="d-flex align-items-center">
-              <div>
-                <h4 className="card-title mb-0">Clases</h4>
-              </div>
-              <div className="offset-md-9 offset-s-9">
-                <button
-                  className="btn btn-primary waves-effect waves-light"
-                  type="button"
-                >
-                  <i className="mdi mdi-playlist-plus" />
-                </button>
-              </div>
+            <div className="float-left">
+              <h4 className="card-title mb-0">Clases</h4>
+            </div>
+            <div className="float-right">
+              <button
+                className="btn btn-info waves-effect waves-light"
+                type="button"
+              >
+                <i className="mdi mdi-playlist-plus" /> Agregar
+              </button>
             </div>
           </div>
 

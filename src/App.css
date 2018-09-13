@@ -40,6 +40,10 @@
 .custom-checkbox {
   margin-left: 25%;
 }
+
+.row-click {
+  cursor: pointer;
+}
 /* .left-sidebar {
   background-color: #3e5569;
 } */

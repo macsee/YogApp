@@ -2,7 +2,20 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 class Sidebar extends Component {
-  state = {};
+  state = {
+    agenda_li: "selected",
+    agenda_i: "active",
+    alumnos_li: "",
+    alumnos_i: "",
+    profesores_li: "",
+    profesores_i: "",
+    clases_li: "",
+    clases_i: ""
+  };
+
+  setSelection = () => {
+    console.log(window.location.pathname.split("/")[1]);
+  };
   render() {
     return (
       <aside className="left-sidebar" data-sidebarbg="skin5">
