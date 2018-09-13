@@ -11,19 +11,28 @@ import {
 } from "react-router-dom";
 
 class Alumnos extends Component {
-  state = {
+
+  constuctor() {
+    this.goTo = this.goTo.bind(this);
+  }
+
+  goTo = (id) => {
+    this.props.history.push("/alumnos/detalle/"+id);
+  }
+
+ /* state = {
     redirect: false,
     id: ""
   };
 
   click = id => {
     this.setState({ redirect: true, id: id });
-  };
+  };*/
 
   render() {
-    if (this.state.redirect) {
-      return <Redirect push to="/alumnos/detalle/1" />;
-    }
+    /*if (this.state.redirect) {
+      return <Redirect push to={"/alumnos/detalle/"+this.state.id} />;
+    }*/
     return (
       <div className="card">
         <div className="card-body">
@@ -51,7 +60,7 @@ class Alumnos extends Component {
               </tr>
             </thead>
             <tbody>
-              <tr className="row-click" onClick={this.click}>
+              <tr className="row-click" onClick={() => this.goTo(1)}>
                 <td className="txt-oflo">1 </td>
                 <td>
                   <span className="txt-oflo">Juan Perez</span>
@@ -65,7 +74,7 @@ class Alumnos extends Component {
                   </span>
                 </td>
               </tr>
-              <tr onClick={this.click}>
+              <tr className="row-click" onClick={() => this.gotTo(2)}>
                 <td className="txt-oflo">2 </td>
                 <td>
                   <span className="txt-oflo">Martin Suarez</span>
@@ -79,7 +88,7 @@ class Alumnos extends Component {
                   </span>
                 </td>
               </tr>
-              <tr onClick={this.click}>
+              <tr className="row-click" onClick={() => this.gotTo(3)}>
                 <td className="txt-oflo">3 </td>
                 <td>
                   <span className="txt-oflo">Roberto Sanchez</span>
@@ -93,7 +102,7 @@ class Alumnos extends Component {
                   </span>
                 </td>
               </tr>
-              <tr onClick={this.click}>
+              <tr className="row-click" onClick={() => this.gotTo(4)}>
                 <td className="txt-oflo">4 </td>
                 <td>
                   <span className="txt-oflo">Esteban Quito</span>
@@ -107,7 +116,7 @@ class Alumnos extends Component {
                   </span>
                 </td>
               </tr>
-              <tr onClick={this.click}>
+              <tr className="row-click" onClick={() => this.gotTo(5)}>
                 <td className="txt-oflo">5 </td>
                 <td>
                   <span className="txt-oflo">Jose Guardiola</span>
