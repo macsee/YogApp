@@ -11,16 +11,15 @@ import {
 } from "react-router-dom";
 
 class Alumnos extends Component {
+  // constuctor() {
+  //   this.goTo = this.goTo.bind(this);
+  // }
 
-  constuctor() {
-    this.goTo = this.goTo.bind(this);
-  }
+  goTo = id => {
+    this.props.history.push("/alumnos/detalle/" + id);
+  };
 
-  goTo = (id) => {
-    this.props.history.push("/alumnos/detalle/"+id);
-  }
-
- /* state = {
+  /* state = {
     redirect: false,
     id: ""
   };
@@ -47,6 +46,25 @@ class Alumnos extends Component {
               <i className="mdi mdi-playlist-plus" /> Nuevo
             </button>
           </div>
+        </div>
+        <div className="card-body">
+          <form className="m-t-20 form-horizontal">
+            <div className="form-group row">
+              <div className="col-md-6">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="inputHorizontalSuccess"
+                  placeholder="Apellido"
+                />
+              </div>
+              <div className="form-actions">
+                <button className="btn btn-primary" type="submit">
+                  Buscar
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
 
         <div className="table-responsive">

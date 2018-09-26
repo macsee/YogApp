@@ -2,39 +2,26 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 class Sidebar extends Component {
-  state = {
-    agenda_li: "selected",
-    agenda_i: "active",
-    alumnos_li: "",
-    alumnos_i: "",
-    profesores_li: "",
-    profesores_i: "",
-    clases_li: "",
-    clases_i: ""
-  };
+  state = {};
 
   setSelection = () => {
     console.log(window.location.pathname.split("/")[1]);
   };
 
-  isActiveLi = (value) => {
+  isActiveLi = value => {
     var section = window.location.pathname.split("/")[1];
 
-    if (value === section)
-      return "sidebar-item selected";
-    else
-      return "sidebar-item";
+    if (value === section) return "sidebar-item selected";
+    else return "sidebar-item";
   };
-  
-  isActiveLink = (value) => {
+
+  isActiveLink = value => {
     var section = window.location.pathname.split("/")[1];
 
     if (value === section)
       return "sidebar-link waves-effect waves-dark sidebar-link active";
-    else
-      return "sidebar-link waves-effect waves-dark sidebar-link";
-
-  }
+    else return "sidebar-link waves-effect waves-dark sidebar-link";
+  };
 
   render() {
     return (
@@ -43,19 +30,13 @@ class Sidebar extends Component {
           <nav className="sidebar-nav">
             <ul id="sidebarnav" className="in">
               <li className={this.isActiveLi("")}>
-                <Link
-                  className={this.isActiveLink("")}
-                  to="/"
-                >
+                <Link className={this.isActiveLink("")} to="/">
                   <i className="mdi mdi-calendar-text" />
                   Agenda
                 </Link>
               </li>
               <li className={this.isActiveLi("alumnos")}>
-                <Link
-                  className={this.isActiveLink("alumnos")}
-                  to="/alumnos"
-                >
+                <Link className={this.isActiveLink("alumnos")} to="/alumnos">
                   <i className="mdi mdi-account" />
                   Alumnos
                 </Link>
@@ -70,10 +51,7 @@ class Sidebar extends Component {
                 </Link>
               </li>
               <li className={this.isActiveLi("clases")}>
-                <Link
-                  className={this.isActiveLink("clases")}
-                  to="/clases"
-                >
+                <Link className={this.isActiveLink("clases")} to="/clases">
                   <i className="mdi mdi-clipboard-outline" />
                   Clases
                 </Link>

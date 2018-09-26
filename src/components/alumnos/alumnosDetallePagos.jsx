@@ -14,21 +14,21 @@ class DetallePagos extends Component {
     var pagado = 0;
     var deuda = 0;
     data.map((pago, i) => {
-      pagado += parseInt(pago.abonado);
       deuda += parseInt(pago.debe);
     });
-    var total = pagado - deuda;
 
-    if (total < 0)
+    if (deuda < 0)
       return (
-        <div className="col-xs-12 col-md-8 align-self-center display-6 text-danger text-right">
-          -{total};
+        <div className="col-xs-12 col-md-8 align-self-center display-6 text-success text-right">
+          +$
+          {deuda};
         </div>
       );
     else
       return (
-        <div className="col-xs-12 col-md-8 align-self-center display-6 text-success text-right">
-          +{total}
+        <div className="col-xs-12 col-md-8 align-self-center display-6 text-danger text-right">
+          -$
+          {deuda}
         </div>
       );
   };
@@ -36,7 +36,7 @@ class DetallePagos extends Component {
   render() {
     return (
       <div className="card">
-        <div className="card-body">
+        {/* <div className="card-body">
           <form className="m-t-40" action="#">
             <div className="form-body">
               <div className="row p-t-20">
@@ -50,9 +50,6 @@ class DetallePagos extends Component {
                       placeholder=""
                       required
                     />
-                    {/* <small className="form-control-feedback">
-                          This is inline help
-                        </small> */}
                   </div>
                 </div>
                 <div className="col-md-2">
@@ -65,9 +62,6 @@ class DetallePagos extends Component {
                       placeholder=""
                       required
                     />
-                    {/* <small className="form-control-feedback">
-                          This is inline help
-                        </small> */}
                   </div>
                 </div>
                 <div className="col-md-3">
@@ -80,9 +74,6 @@ class DetallePagos extends Component {
                       placeholder=""
                       required
                     />
-                    {/* <small className="form-control-feedback">
-                          This is inline help
-                        </small> */}
                   </div>
                 </div>
                 <div className="col-md-3">
@@ -111,6 +102,38 @@ class DetallePagos extends Component {
               </div>
             </div>
           </form>
+        </div> */}
+        <div className="card-body">
+          <div className="row">
+            <div className="col-md-3">
+              <div className="form-group">
+                <label className="control-label">Desde</label>
+                <input type="date" className="form-control" defaultValue={""} />
+              </div>
+            </div>
+            <div className="col-md-3">
+              <div className="form-group">
+                <label className="control-label">Desde</label>
+                <input type="date" className="form-control" defaultValue={""} />
+              </div>
+            </div>
+            <div className="col-md-3">
+              <div className="form-group">
+                <label className="control-label">Descripcion</label>
+                <select
+                  className="form-control custom-select"
+                  data-placeholder="Choose a Category"
+                  tabIndex="1"
+                  defaultValue={this.state.value}
+                >
+                  <option value="0">Cuota</option>
+                  <option value="1">Taller</option>
+                  <option value="2">Producto</option>
+                  <option value="3">Deuda</option>
+                </select>
+              </div>
+            </div>
+          </div>
         </div>
         <div className="card-body bg-light">
           <div className="row align-items-center">
@@ -119,9 +142,6 @@ class DetallePagos extends Component {
               <span className="font-14 text-muted">A fecha 11/09/18</span>
             </div>
             {this.getDeuda(this.props.alumno.pagos)}
-            {/* <div className="col-xs-12 col-md-8 align-self-center display-6 text-success text-right">
-              +$200
-            </div> */}
           </div>
         </div>
         <div className="card-body">
@@ -145,10 +165,10 @@ class DetallePagos extends Component {
                         <span className="txt-oflo">{pago.fecha}</span>
                       </td>
                       <td>
-                        <span className="txt-oflo">{pago.abonado}</span>
+                        <span className="txt-oflo">${pago.abonado}</span>
                       </td>
                       <td>
-                        <span className="txt-oflo">{pago.debe}</span>
+                        <span className="txt-oflo">${pago.debe}</span>
                       </td>
                       <td>
                         <span className={this.setBadgeDesc(pago.desc)}>
