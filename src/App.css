@@ -44,6 +44,10 @@
 .row-click {
   cursor: pointer;
 }
+
+.nav-link {
+  cursor: pointer;
+}
 /* .left-sidebar {
   background-color: #3e5569;
 } */

@@ -47,7 +47,10 @@ class Table extends Component {
                 </tr>
               </thead>
               <tbody>
-                <tr onClick={() => this.showModal(this.state.id)}>
+                <tr
+                  onClick={() => this.showModal(this.state.id)}
+                  className="row-click"
+                >
                   <td className="txt-oflo">08:00 </td>
                   <td>
                     <span className="txt-oflo">Noelia Perez</span>
@@ -61,7 +64,10 @@ class Table extends Component {
                     </h4>
                   </td>
                 </tr>
-                <tr>
+                <tr
+                  onClick={() => this.showModal(this.state.id)}
+                  className="row-click"
+                >
                   <td className="txt-oflo">09:00 </td>
                   <td>
                     <span className="txt-oflo">Noelia Perez</span>
@@ -75,7 +81,10 @@ class Table extends Component {
                     </h4>
                   </td>
                 </tr>
-                <tr>
+                <tr
+                  onClick={() => this.showModal(this.state.id)}
+                  className="row-click"
+                >
                   <td className="txt-oflo">10:00 </td>
                   <td>
                     <span className="txt-oflo">Noelia Perez</span>
@@ -89,7 +98,10 @@ class Table extends Component {
                     </h4>
                   </td>
                 </tr>
-                <tr>
+                <tr
+                  onClick={() => this.showModal(this.state.id)}
+                  className="row-click"
+                >
                   <td className="txt-oflo">17:00 </td>
                   <td>
                     <span className="txt-oflo">Noelia Perez</span>
