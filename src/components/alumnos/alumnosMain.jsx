@@ -11,9 +11,14 @@ import {
 } from "react-router-dom";
 
 class Alumnos extends Component {
-  // constuctor() {
-  //   this.goTo = this.goTo.bind(this);
-  // }
+  constructor(props) {
+    super(props);
+    this.state = {
+      error: null,
+      isLoaded: false,
+      items: []
+    };
+  }
 
   goTo = id => {
     this.props.history.push("/alumnos/detalle/" + id);
@@ -27,6 +32,19 @@ class Alumnos extends Component {
   click = id => {
     this.setState({ redirect: true, id: id });
   };*/
+
+  componentDidMount() {
+    fetch("http://localhost:8000/alumnos/", {})
+      .then(res => res.json())
+      .then(
+        result => {
+          this.setState({ ...this.state, isLoaded: true, items: result });
+        },
+        error => {
+          this.setState({ ...this.state, isLoaded: true, error });
+        }
+      );
+  }
 
   render() {
     /*if (this.state.redirect) {
@@ -66,91 +84,47 @@ class Alumnos extends Component {
             </div>
           </form>
         </div>
-
-        <div className="table-responsive">
-          <table className="table table-hover">
-            <thead>
-              <tr>
-                <th className="border-top-0">#</th>
-                <th className="border-top-0">NOMBRE</th>
-                <th className="border-top-0">TEL</th>
-                <th className="border-top-0">ESTADO</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="row-click" onClick={() => this.goTo(1)}>
-                <td className="txt-oflo">1 </td>
-                <td>
-                  <span className="txt-oflo">Juan Perez</span>
-                </td>
-                <td>
-                  <span className="txt-oflo">0341-153631685</span>
-                </td>
-                <td>
-                  <span className="label label-success label-rounded">
-                    Activo
-                  </span>
-                </td>
-              </tr>
-              <tr className="row-click" onClick={() => this.gotTo(2)}>
-                <td className="txt-oflo">2 </td>
-                <td>
-                  <span className="txt-oflo">Martin Suarez</span>
-                </td>
-                <td>
-                  <span className="txt-oflo">0341-155123455</span>
-                </td>
-                <td>
-                  <span className="label label-success label-rounded">
-                    Activo
-                  </span>
-                </td>
-              </tr>
-              <tr className="row-click" onClick={() => this.gotTo(3)}>
-                <td className="txt-oflo">3 </td>
-                <td>
-                  <span className="txt-oflo">Roberto Sanchez</span>
-                </td>
-                <td>
-                  <span className="txt-oflo">0341-155758656</span>
-                </td>
-                <td>
-                  <span className="label label-danger label-rounded">
-                    Inactivo
-                  </span>
-                </td>
-              </tr>
-              <tr className="row-click" onClick={() => this.gotTo(4)}>
-                <td className="txt-oflo">4 </td>
-                <td>
-                  <span className="txt-oflo">Esteban Quito</span>
-                </td>
-                <td>
-                  <span className="txt-oflo">0341-152198765</span>
-                </td>
-                <td>
-                  <span className="label label-success label-rounded">
-                    Activo
-                  </span>
-                </td>
-              </tr>
-              <tr className="row-click" onClick={() => this.gotTo(5)}>
-                <td className="txt-oflo">5 </td>
-                <td>
-                  <span className="txt-oflo">Jose Guardiola</span>
-                </td>
-                <td>
-                  <span className="txt-oflo">0341-155123455</span>
-                </td>
-                <td>
-                  <span className="label label-success label-rounded">
-                    Activo
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        {this.state.error ? <h2> Error </h2> : ""}
+        {this.state.items.length === 0 ? (
+          <h2> No hay alumnos </h2>
+        ) : (
+          <div className="table-responsive">
+            <table className="table table-hover">
+              <thead>
+                <tr>
+                  <th className="border-top-0">#</th>
+                  <th className="border-top-0">NOMBRE</th>
+                  <th className="border-top-0">TEL</th>
+                  <th className="border-top-0">ESTADO</th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.state.items.map((row, i) => (
+                  <tr
+                    key={i}
+                    className="row-click"
+                    onClick={() => this.goTo(row.pk)}
+                  >
+                    <td className="txt-oflo">{row.pk} </td>
+                    <td>
+                      <span className="txt-oflo">
+                        {row.nombre + " " + row.apellido}
+                      </span>
+                    </td>
+                    <td>
+                      <span className="txt-oflo">{row.tel}</span>
+                    </td>
+                    <td>
+                      <span className="label label-success label-rounded">
+                        Activo
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     );
   }

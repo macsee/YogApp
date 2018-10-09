@@ -13,9 +13,9 @@ class DetallePagos extends Component {
   getDeuda = data => {
     var pagado = 0;
     var deuda = 0;
-    data.map((pago, i) => {
-      deuda += parseInt(pago.debe);
-    });
+    // data.map((pago, i) => {
+    //   deuda += parseInt(pago.debe);
+    // });
 
     if (deuda < 0)
       return (
@@ -36,73 +36,6 @@ class DetallePagos extends Component {
   render() {
     return (
       <div className="card">
-        {/* <div className="card-body">
-          <form className="m-t-40" action="#">
-            <div className="form-body">
-              <div className="row p-t-20">
-                <div className="col-md-2">
-                  <div className="form-group">
-                    <label className="control-label">Abonado</label>
-                    <input
-                      type="text"
-                      id="firstName"
-                      className="form-control"
-                      placeholder=""
-                      required
-                    />
-                  </div>
-                </div>
-                <div className="col-md-2">
-                  <div className="form-group">
-                    <label className="control-label">Total</label>
-                    <input
-                      type="text"
-                      id="firstName"
-                      className="form-control"
-                      placeholder=""
-                      required
-                    />
-                  </div>
-                </div>
-                <div className="col-md-3">
-                  <div className="form-group">
-                    <label className="control-label">Fecha</label>
-                    <input
-                      type="date"
-                      id="firstName"
-                      className="form-control"
-                      placeholder=""
-                      required
-                    />
-                  </div>
-                </div>
-                <div className="col-md-3">
-                  <div className="form-group">
-                    <label className="control-label">Descripcion</label>
-                    <select
-                      className="form-control custom-select"
-                      data-placeholder="Choose a Category"
-                      tabIndex="1"
-                      defaultValue={this.state.value}
-                    >
-                      <option value="0">Cuota</option>
-                      <option value="1">Taller</option>
-                      <option value="2">Producto</option>
-                      <option value="3">Deuda</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="col-md-2">
-                  <div className="card-body">
-                    <button className="btn btn-success" type="submit">
-                      Ingresar
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div> */}
         <div className="card-body">
           <div className="row">
             <div className="col-md-3">
@@ -113,7 +46,7 @@ class DetallePagos extends Component {
             </div>
             <div className="col-md-3">
               <div className="form-group">
-                <label className="control-label">Desde</label>
+                <label className="control-label">Hasta</label>
                 <input type="date" className="form-control" defaultValue={""} />
               </div>
             </div>
@@ -157,7 +90,7 @@ class DetallePagos extends Component {
                 </tr>
               </thead>
               <tbody>
-                {this.props.alumno.pagos.map((pago, i) => {
+                {/* {this.props.alumno.pagos.map((pago, i) => {
                   return (
                     <tr key={i} onClick={this.click}>
                       <td className="txt-oflo">{pago.id} </td>
@@ -177,7 +110,7 @@ class DetallePagos extends Component {
                       </td>
                     </tr>
                   );
-                })}
+                })} */}
               </tbody>
             </table>
           </div>

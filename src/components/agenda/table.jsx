@@ -2,24 +2,25 @@ import React, { Component } from "react";
 import ModalAlumno from "./modalAlumno";
 // import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
-class Table extends Component {
+class TableContent extends Component {
   constructor(props) {
     super(props);
-    this.child = React.createRef();
+    this.state = {
+      value: false,
+      data: []
+    };
+    // this.child = React.createRef();
   }
 
-  showModal = id => {
-    this.child.current.toggle(id);
-  };
+  // showModal = id => {
+  //   this.child.current.toggle(id);
+  // };
 
-  state = {
-    id: 1
-  };
   render() {
     return (
       <React.Fragment>
         <div>
-          <ModalAlumno ref={this.child} />
+          <ModalAlumno estado={this.state.value} data={this.state.data} />
         </div>
         <div className="card">
           <div className="card-body">
@@ -40,87 +41,82 @@ class Table extends Component {
             <table className="table table-hover">
               <thead>
                 <tr>
-                  <th className="border-top-0">HORA</th>
+                  <th className="border-top-0">HORARIO</th>
                   <th className="border-top-0">PROFESOR</th>
                   <th className="border-top-0">GRUPO</th>
                   <th className="border-top-0">CUPO</th>
                 </tr>
               </thead>
               <tbody>
-                <tr
-                  onClick={() => this.showModal(this.state.id)}
-                  className="row-click"
-                >
-                  <td className="txt-oflo">08:00 </td>
-                  <td>
-                    <span className="txt-oflo">Noelia Perez</span>
-                  </td>
-                  <td>
-                    <span className="txt-oflo">Yoga A</span>
-                  </td>
-                  <td>
-                    <h4>
-                      <span className="badge badge-pill badge-success">7</span>
-                    </h4>
-                  </td>
-                </tr>
-                <tr
-                  onClick={() => this.showModal(this.state.id)}
-                  className="row-click"
-                >
-                  <td className="txt-oflo">09:00 </td>
-                  <td>
-                    <span className="txt-oflo">Noelia Perez</span>
-                  </td>
-                  <td>
-                    <span className="txt-oflo">Yoga B</span>
-                  </td>
-                  <td>
-                    <h4>
-                      <span className="badge badge-pill badge-success">5</span>
-                    </h4>
-                  </td>
-                </tr>
-                <tr
-                  onClick={() => this.showModal(this.state.id)}
-                  className="row-click"
-                >
-                  <td className="txt-oflo">10:00 </td>
-                  <td>
-                    <span className="txt-oflo">Noelia Perez</span>
-                  </td>
-                  <td>
-                    <span className="txt-oflo">Yoga C</span>
-                  </td>
-                  <td>
-                    <h4>
-                      <span className="badge badge-pill badge-warning">4</span>
-                    </h4>
-                  </td>
-                </tr>
-                <tr
-                  onClick={() => this.showModal(this.state.id)}
-                  className="row-click"
-                >
-                  <td className="txt-oflo">17:00 </td>
-                  <td>
-                    <span className="txt-oflo">Noelia Perez</span>
-                  </td>
-                  <td>
-                    <span className="txt-oflo">Yoga D</span>
-                  </td>
-                  <td>
-                    <h4>
-                      <span className="badge badge-pill badge-danger">2</span>
-                    </h4>
-                  </td>
-                </tr>
+                {this.props.data.map((row, i) => (
+                  <tr
+                    key={i}
+                    onClick={() =>
+                      this.setState({
+                        value: !this.state.value,
+                        data: row
+                      })
+                    }
+                    // onClick={() => this.showModal(row.pk)}
+                    className="row-click"
+                  >
+                    <td className="txt-oflo">{row.hora_inicio}</td>
+                    <td>
+                      <span className="txt-oflo">{row.profesor.nombre}</span>
+                    </td>
+                    <td>
+                      <span className="txt-oflo">{row.nombre}</span>
+                    </td>
+                    <td>
+                      <h4>
+                        <span className="badge badge-pill badge-success">
+                          7
+                        </span>
+                      </h4>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
         </div>
       </React.Fragment>
     );
+  }
+}
+
+class Table extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      error: null,
+      isLoaded: false,
+      items: []
+    };
+  }
+
+  componentDidMount() {
+    fetch("http://localhost:8000/clase_dia/?dia=" + this.props.dia, {})
+      .then(res => res.json())
+      .then(
+        result => {
+          this.setState({ ...this.state, isLoaded: true, items: result });
+        },
+        error => {
+          console.log(error);
+          this.setState({ ...this.state, isLoaded: true, error });
+        }
+      );
+  }
+
+  render() {
+    if (this.state.items.length !== 0) {
+      return <TableContent data={this.state.items} />;
+    } else if (this.state.items.length === 0) {
+      return <h2>No hay datos para la fecha</h2>;
+    } else {
+      return <h2>Error de conexion</h2>;
+    }
   }
 }
 

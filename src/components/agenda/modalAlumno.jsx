@@ -17,19 +17,29 @@ class ModalAlumno extends Component {
     });
   }
 
+  componentDidUpdate(prevProps) {
+    // Typical usage (don't forget to compare props):
+    if (this.props.estado !== prevProps.estado) {
+      this.toggle();
+    }
+  }
+
   render() {
     return (
       <div>
-        {/* <Button color="danger" onClick={this.toggle}>
-          {this.props.buttonLabel}
-        </Button> */}
         <Modal
           isOpen={this.state.modal}
           toggle={this.toggle}
           className={this.props.className}
         >
           <ModalHeader toggle={this.toggle}>
-            08:00 - Noelia Perez - Yoga A
+            {this.props.data.length !== 0
+              ? this.props.data.hora_inicio +
+                " - " +
+                this.props.data.profesor.nombre +
+                " - " +
+                this.props.data.nombre
+              : ""}
           </ModalHeader>
           <ModalBody>
             <table className="table table-hover">
@@ -41,63 +51,36 @@ class ModalAlumno extends Component {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td className="txt-oflo">1 </td>
-                  <td>
-                    <span className="txt-oflo">Juan Perez</span>
-                  </td>
-                  <td>
-                    <div className="custom-control custom-checkbox">
-                      <input
-                        type="checkbox"
-                        className="custom-control-input"
-                        id="customCheck1"
-                      />
-                      <label
-                        className="custom-control-label todo-label"
-                        htmlFor="customCheck1"
-                      />
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="txt-oflo">2 </td>
-                  <td>
-                    <span className="txt-oflo">Carlos Martinez</span>
-                  </td>
-                  <td>
-                    <div className="custom-control custom-checkbox">
-                      <input
-                        type="checkbox"
-                        className="custom-control-input"
-                        id="customCheck2"
-                      />
-                      <label
-                        className="custom-control-label todo-label"
-                        htmlFor="customCheck2"
-                      />
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="txt-oflo">3 </td>
-                  <td>
-                    <span className="txt-oflo">Rosa Alvarez</span>
-                  </td>
-                  <td>
-                    <div className="custom-control custom-checkbox">
-                      <input
-                        type="checkbox"
-                        className="custom-control-input"
-                        id="customCheck3"
-                      />
-                      <label
-                        className="custom-control-label todo-label"
-                        htmlFor="customCheck3"
-                      />
-                    </div>
-                  </td>
-                </tr>
+                {this.props.data.length !== 0 ? (
+                  this.props.data.listado_alumnos !== 0 ? (
+                    this.props.data.lista_alumnos.map((row, i) => (
+                      <tr key={i}>
+                        <td className="txt-oflo">{row.pk} </td>
+                        <td>
+                          <span className="txt-oflo">{row.nombre}</span>
+                        </td>
+                        <td>
+                          <div className="custom-control custom-checkbox">
+                            <input
+                              type="checkbox"
+                              className="custom-control-input"
+                              id={"asistencia_" + row.pk}
+                              name={"asistencia_" + row.pk}
+                            />
+                            <label
+                              className="custom-control-label todo-label"
+                              htmlFor={"asistencia_" + row.pk}
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <h2> No hay alumnos para esta clase</h2>
+                  )
+                ) : (
+                  ""
+                )}
               </tbody>
             </table>
           </ModalBody>

@@ -1,11 +1,48 @@
 import React, { Component } from "react";
 
 class DetalleDatos extends Component {
-  state = {
-    value: "2"
+  constructor(props) {
+    super(props);
+    this.state = {
+      error: null,
+      isLoaded: false,
+      alumno: [],
+      clases: []
+    };
+  }
+
+  getAlumnosData = id => {
+    fetch("http://localhost:8000/alumnos/" + id + "/", {})
+      .then(res => res.json())
+      .then(
+        result => {
+          this.setState({ ...this.state, isLoaded: true, alumno: result });
+        },
+        error => {
+          this.setState({ ...this.state, isLoaded: true, error });
+        }
+      );
   };
+
+  getClasesData = () => {
+    fetch("http://localhost:8000/clases/", {})
+      .then(res => res.json())
+      .then(
+        result => {
+          this.setState({ ...this.state, isLoaded: true, clases: result });
+        },
+        error => {
+          this.setState({ ...this.state, isLoaded: true, error });
+        }
+      );
+  };
+
+  componentDidMount() {
+    this.getAlumnosData(this.props.alumno);
+    this.getClasesData();
+  }
+
   render() {
-    console.log(this.props.alumno);
     return (
       <div className="card">
         <div className="card-body">
@@ -20,7 +57,11 @@ class DetalleDatos extends Component {
                       id="firstName"
                       className="form-control"
                       placeholder=""
-                      defaultValue={this.props.alumno.datos.nombre}
+                      defaultValue={
+                        this.state.alumno.length !== 0
+                          ? this.state.alumno.nombre
+                          : ""
+                      }
                       required
                     />
 
@@ -38,7 +79,11 @@ class DetalleDatos extends Component {
                       id="lastName"
                       className="form-control"
                       placeholder=""
-                      defaultValue={this.props.alumno.datos.apellido}
+                      defaultValue={
+                        this.state.alumno.length !== 0
+                          ? this.state.alumno.apellido
+                          : ""
+                      }
                       required
                     />
                     {/* <small className="form-control-feedback">
@@ -55,7 +100,11 @@ class DetalleDatos extends Component {
                     <input
                       type="date"
                       className="form-control"
-                      defaultValue={this.props.alumno.datos.fecha_nac}
+                      defaultValue={
+                        this.state.alumno.length !== 0
+                          ? this.state.alumno.fecha_nac
+                          : ""
+                      }
                     />
                   </div>
                 </div>
@@ -65,7 +114,11 @@ class DetalleDatos extends Component {
                     <input
                       type="text"
                       className="form-control"
-                      defaultValue={this.props.alumno.datos.dni}
+                      defaultValue={
+                        this.state.alumno.length !== 0
+                          ? this.state.alumno.dni
+                          : ""
+                      }
                     />
                   </div>
                 </div>
@@ -77,7 +130,11 @@ class DetalleDatos extends Component {
                     <input
                       type="text"
                       className="form-control"
-                      defaultValue={this.props.alumno.datos.direccion}
+                      defaultValue={
+                        this.state.alumno.length !== 0
+                          ? this.state.alumno.direccion
+                          : ""
+                      }
                     />
                   </div>
                 </div>
@@ -87,7 +144,11 @@ class DetalleDatos extends Component {
                     <input
                       type="text"
                       className="form-control"
-                      defaultValue={this.props.alumno.datos.ciudad}
+                      defaultValue={
+                        this.state.alumno.length !== 0
+                          ? this.state.alumno.ciudad
+                          : "Rosario"
+                      }
                     />
                   </div>
                 </div>
@@ -97,7 +158,11 @@ class DetalleDatos extends Component {
                     <input
                       type="tel"
                       className="form-control"
-                      defaultValue={this.props.alumno.datos.tel}
+                      defaultValue={
+                        this.state.alumno.length !== 0
+                          ? this.state.alumno.tel
+                          : ""
+                      }
                     />
                   </div>
                 </div>
@@ -110,7 +175,11 @@ class DetalleDatos extends Component {
                       className="form-control custom-select"
                       data-placeholder="Choose a Category"
                       tabIndex="1"
-                      defaultValue={this.props.alumno.datos.membresia}
+                      defaultValue={
+                        this.state.alumno.length !== 0
+                          ? this.state.alumno.membresia
+                          : ""
+                      }
                     >
                       <option value="0">Sin Cargo</option>
                       <option value="1">1 x Semana</option>
@@ -128,7 +197,11 @@ class DetalleDatos extends Component {
                       className="form-control custom-select"
                       multiple
                       tabIndex="1"
-                      defaultValue={this.props.alumno.datos.clases}
+                      defaultValue={
+                        this.state.alumno.length !== 0
+                          ? this.state.alumno.clases
+                          : ""
+                      }
                     >
                       <option value="0">Lu - 08:00 - Noelia Perez</option>
                       <option value="1">Lu - 09:00 - Noelia Perez</option>

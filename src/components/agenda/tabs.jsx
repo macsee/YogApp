@@ -18,18 +18,9 @@ class Tabs extends Component {
 
   toggle = tab => {
     if (this.state.activeTab !== tab) {
-      this.setState({
-        activeTab: tab
-      });
+      this.setState({ ...this.state, activeTab: tab });
     }
   };
-
-  // setActive = fecha => {
-  //   console.log(this.state.activo);
-  //   let activo = ["", "", "", "", "", "", ""];
-  //   activo[this.props.fecha._d.getDay()] = " active";
-  //   this.setState({ activo });
-  // };
 
   getWeekDayDate = (fecha, dia) => {
     let dow = fecha.getDay();
@@ -57,7 +48,6 @@ class Tabs extends Component {
   //   this.setActive(this.props.fecha._d);
   // }
   render() {
-    // console.log(this.state.dias);
     return (
       <React.Fragment>
         <Nav tabs>
@@ -162,32 +152,25 @@ class Tabs extends Component {
         </Nav>
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="LU">
-            Lunes
-            <Table />
+            <Table dia="LU" />
           </TabPane>
           <TabPane tabId="MA">
-            Martes
-            <Table />
+            <Table dia="MA" />
           </TabPane>
           <TabPane tabId="MI">
-            Miercoles
-            <Table />
+            <Table dia="MI" />
           </TabPane>
           <TabPane tabId="JU">
-            Jueves
-            <Table />
+            <Table dia="JU" />
           </TabPane>
           <TabPane tabId="VI">
-            Viernes
-            <Table />
+            <Table dia="VI" />
           </TabPane>
           <TabPane tabId="SA">
-            Sabado
-            <Table />
+            <Table dia="SA" />
           </TabPane>
           <TabPane tabId="DO">
-            Domingo
-            <Table />
+            <Table dia="DO" />
           </TabPane>
         </TabContent>
       </React.Fragment>

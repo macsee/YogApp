@@ -21,9 +21,7 @@ class Agenda extends Component {
   }
 
   handleChange(date) {
-    this.setState({
-      startDate: date
-    });
+    this.setState({ ...this.state, startDate: date });
   }
 
   render() {

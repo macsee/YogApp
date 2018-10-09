@@ -39,6 +39,7 @@
 
 .custom-checkbox {
   margin-left: 25%;
+  margin-top: -20px;
 }
 
 .row-click {
@@ -51,3 +52,7 @@
 /* .left-sidebar {
   background-color: #3e5569;
 } */
+
+.card {
+  margin-bottom: 0px;
+}
