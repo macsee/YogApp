@@ -43,6 +43,7 @@ class DetalleDatos extends Component {
   }
 
   render() {
+    console.log(this.state.clases);
     return (
       <div className="card">
         <div className="card-body">
@@ -198,18 +199,24 @@ class DetalleDatos extends Component {
                       multiple
                       tabIndex="1"
                       defaultValue={
-                        this.state.alumno.length !== 0
-                          ? this.state.alumno.clases
-                          : ""
+                        this.state.alumno.clases.length !== 0
+                          ? this.state.alumno.clases.map(value => value.pk)
+                          : []
                       }
                     >
-                      <option value="0">Lu - 08:00 - Noelia Perez</option>
-                      <option value="1">Lu - 09:00 - Noelia Perez</option>
-                      <option value="2">Lu - 09:00 - Noelia Perez</option>
-                      <option value="3">Lu - 09:00 - Noelia Perez</option>
-                      <option value="4">Lu - 09:00 - Noelia Perez</option>
-                      <option value="5">Lu - 09:00 - Noelia Perez</option>
-                      <option value="6">Lu - 09:00 - Noelia Perez</option>
+                      {this.state.clases.map((row, i) => (
+                        <option key={i} value={row.pk}>
+                          {row.dia +
+                            " - " +
+                            row.hora_inicio +
+                            " - " +
+                            row.profesor_.nombre +
+                            ", " +
+                            row.profesor_.apellido +
+                            " - " +
+                            row.nombre}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>

@@ -18,6 +18,8 @@ class Tabs extends Component {
 
   toggle = tab => {
     if (this.state.activeTab !== tab) {
+      // let temp = { ...this.state, activeTab: tab };
+      // this.setState(temp);
       this.setState({ ...this.state, activeTab: tab });
     }
   };

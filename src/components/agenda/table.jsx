@@ -12,6 +12,9 @@ class TableContent extends Component {
     // this.child = React.createRef();
   }
 
+  showModal = row => {
+    this.setState({ ...this.state, value: !this.state.value, data: row });
+  };
   // showModal = id => {
   //   this.child.current.toggle(id);
   // };
@@ -51,13 +54,7 @@ class TableContent extends Component {
                 {this.props.data.map((row, i) => (
                   <tr
                     key={i}
-                    onClick={() =>
-                      this.setState({
-                        value: !this.state.value,
-                        data: row
-                      })
-                    }
-                    // onClick={() => this.showModal(row.pk)}
+                    onClick={() => this.showModal(row)}
                     className="row-click"
                   >
                     <td className="txt-oflo">{row.hora_inicio}</td>

@@ -24,15 +24,6 @@ class Alumnos extends Component {
     this.props.history.push("/alumnos/detalle/" + id);
   };
 
-  /* state = {
-    redirect: false,
-    id: ""
-  };
-
-  click = id => {
-    this.setState({ redirect: true, id: id });
-  };*/
-
   componentDidMount() {
     fetch("http://localhost:8000/alumnos/", {})
       .then(res => res.json())
