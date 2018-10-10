@@ -38,6 +38,31 @@ class DetalleDatos extends Component {
       );
   };
 
+  handleSubmit = event => {
+    event.preventDefault();
+
+    const formData = new FormData();
+    formData.append("nombre", event.target.nombre.value);
+    formData.append("apellido", event.target.apellido.value);
+    formData.append("dni", event.target.dni.value);
+    formData.append("fecha_nac", event.target.fecha_nac.value);
+    formData.append("tel", event.target.tel.value);
+
+    let selectElement = document.getElementById("clases");
+    let selectedValues = Array.from(selectElement.selectedOptions).map(
+      option => option.value
+    );
+
+    formData.append("clases", selectedValues);
+
+    fetch("http://localhost:8000/alumnos/" + this.props.alumno + "/", {
+      method: "PUT",
+      body: formData
+    })
+      .then(res => res.json())
+      .then(result => console.log(result), error => console.log(error));
+  };
+
   componentDidMount() {
     this.getAlumnosData(this.props.alumno);
   }
@@ -46,7 +71,12 @@ class DetalleDatos extends Component {
     return (
       <div className="card">
         <div className="card-body">
-          <form className="m-t-40" action="#">
+          <form
+            id="myForm"
+            name="myForm"
+            className="m-t-40"
+            onSubmit={this.handleSubmit}
+          >
             <div className="form-body">
               <div className="row p-t-20">
                 <div className="col-md-6">
@@ -54,7 +84,8 @@ class DetalleDatos extends Component {
                     <label className="control-label">Nombre</label>
                     <input
                       type="text"
-                      id="firstName"
+                      name="nombre"
+                      id="nombre"
                       className="form-control"
                       placeholder=""
                       defaultValue={
@@ -76,7 +107,8 @@ class DetalleDatos extends Component {
                     <label className="control-label">Apellido</label>
                     <input
                       type="text"
-                      id="lastName"
+                      name="apellido"
+                      id="apellido"
                       className="form-control"
                       placeholder=""
                       defaultValue={
@@ -99,6 +131,8 @@ class DetalleDatos extends Component {
                     <label className="control-label">Fecha de Nacimiento</label>
                     <input
                       type="date"
+                      name="fecha_nac"
+                      id="fecha_nac"
                       className="form-control"
                       defaultValue={
                         this.state.alumno.length !== 0
@@ -113,6 +147,8 @@ class DetalleDatos extends Component {
                     <label className="control-label">DNI</label>
                     <input
                       type="text"
+                      name="dni"
+                      id="dni"
                       className="form-control"
                       defaultValue={
                         this.state.alumno.length !== 0
@@ -129,6 +165,8 @@ class DetalleDatos extends Component {
                     <label>Direccion</label>
                     <input
                       type="text"
+                      name="direccion"
+                      id="direccion"
                       className="form-control"
                       defaultValue={
                         this.state.alumno.length !== 0
@@ -143,6 +181,8 @@ class DetalleDatos extends Component {
                     <label>Ciudad</label>
                     <input
                       type="text"
+                      name="ciudad"
+                      id="ciudad"
                       className="form-control"
                       defaultValue={
                         this.state.alumno.length !== 0
@@ -157,6 +197,8 @@ class DetalleDatos extends Component {
                     <label>Telefono</label>
                     <input
                       type="tel"
+                      name="tel"
+                      id="tel"
                       className="form-control"
                       defaultValue={
                         this.state.alumno.length !== 0
@@ -172,6 +214,8 @@ class DetalleDatos extends Component {
                   <div className="form-group">
                     <label className="control-label">Membresia</label>
                     <select
+                      name="membresia"
+                      id="membresia"
                       className="form-control custom-select"
                       data-placeholder="Choose a Category"
                       tabIndex="1"
@@ -194,17 +238,18 @@ class DetalleDatos extends Component {
                   <div className="form-group">
                     <label>Clases</label>
                     <select
+                      id="clases"
+                      name="clases"
                       className="form-control custom-select"
-                      multiple
+                      multiple={true}
                       tabIndex="1"
-                      defaultValue={
-                        this.state.alumno.length !== 0
-                          ? this.state.alumno.clases
-                          : []
-                      }
                     >
                       {this.state.clases.map((row, i) => (
-                        <option key={i} value={row.pk}>
+                        <option
+                          key={i}
+                          value={row.pk}
+                          selected={this.state.alumno.clases.includes(row.pk)}
+                        >
                           {row.dia +
                             " - " +
                             row.hora_inicio +
@@ -226,12 +271,12 @@ class DetalleDatos extends Component {
                       <input
                         type="radio"
                         id="alumno_activo"
-                        name="estadoAlumno"
+                        name="alumnoEstado"
                         className="custom-control-input"
                       />
                       <label
                         className="custom-control-label"
-                        htmlFor="customRadio11"
+                        htmlFor="alumno_activo"
                       >
                         Activo
                       </label>
@@ -240,12 +285,12 @@ class DetalleDatos extends Component {
                       <input
                         type="radio"
                         id="alumno_noactivo"
-                        name="estadoAlumno"
+                        name="alumnoEstado"
                         className="custom-control-input"
                       />
                       <label
                         className="custom-control-label"
-                        htmlFor="customRadio22"
+                        htmlFor="alumno_noactivo"
                       >
                         No Activo
                       </label>
