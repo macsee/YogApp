@@ -11,19 +11,6 @@ class DetalleDatos extends Component {
     };
   }
 
-  getAlumnosData = id => {
-    fetch("http://localhost:8000/alumnos/" + id + "/", {})
-      .then(res => res.json())
-      .then(
-        result => {
-          this.setState({ ...this.state, isLoaded: true, alumno: result });
-        },
-        error => {
-          this.setState({ ...this.state, isLoaded: true, error });
-        }
-      );
-  };
-
   getClasesData = () => {
     fetch("http://localhost:8000/clases/", {})
       .then(res => res.json())
@@ -37,13 +24,25 @@ class DetalleDatos extends Component {
       );
   };
 
+  getAlumnosData = id => {
+    fetch("http://localhost:8000/alumnos/" + id + "/", {})
+      .then(res => res.json())
+      .then(
+        result => {
+          this.setState({ ...this.state, isLoaded: true, alumno: result });
+          this.getClasesData();
+        },
+        error => {
+          this.setState({ ...this.state, isLoaded: true, error });
+        }
+      );
+  };
+
   componentDidMount() {
     this.getAlumnosData(this.props.alumno);
-    this.getClasesData();
   }
 
   render() {
-    console.log(this.state.clases);
     return (
       <div className="card">
         <div className="card-body">
@@ -199,8 +198,8 @@ class DetalleDatos extends Component {
                       multiple
                       tabIndex="1"
                       defaultValue={
-                        this.state.alumno.clases.length !== 0
-                          ? this.state.alumno.clases.map(value => value.pk)
+                        this.state.alumno.length !== 0
+                          ? this.state.alumno.clases
                           : []
                       }
                     >
