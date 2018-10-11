@@ -20,8 +20,12 @@ class Alumnos extends Component {
     };
   }
 
-  goTo = id => {
+  verDetalle = id => {
     this.props.history.push("/alumnos/detalle/" + id);
+  };
+
+  nuevoAlumno = () => {
+    this.props.history.push("/alumnos/detalle/");
   };
 
   componentDidMount() {
@@ -51,6 +55,7 @@ class Alumnos extends Component {
             <button
               className="btn btn-info waves-effect waves-light"
               type="button"
+              onClick={() => this.nuevoAlumno()}
             >
               <i className="mdi mdi-playlist-plus" /> Nuevo
             </button>
@@ -94,7 +99,7 @@ class Alumnos extends Component {
                   <tr
                     key={i}
                     className="row-click"
-                    onClick={() => this.goTo(row.pk)}
+                    onClick={() => this.verDetalle(row.pk)}
                   >
                     <td className="txt-oflo">{row.pk} </td>
                     <td>
@@ -106,9 +111,15 @@ class Alumnos extends Component {
                       <span className="txt-oflo">{row.tel}</span>
                     </td>
                     <td>
-                      <span className="label label-success label-rounded">
-                        Activo
-                      </span>
+                      {row.activo ? (
+                        <span className="label label-success label-rounded">
+                          Activo
+                        </span>
+                      ) : (
+                        <span className="label label-danger label-rounded">
+                          Inactivo
+                        </span>
+                      )}
                     </td>
                   </tr>
                 ))}

@@ -69,6 +69,11 @@ class App extends Component {
                   path="/alumnos/detalle/:id"
                   component={AlumnosDetalle}
                 />
+                <Route
+                  exact
+                  path="/alumnos/detalle/"
+                  component={AlumnosDetalle}
+                />
               </Switch>
             </div>
           </main>

@@ -56,3 +56,7 @@
 .card {
   margin-bottom: 0px;
 }
+
+.disabledTab {
+  pointer-events: none;
+}
