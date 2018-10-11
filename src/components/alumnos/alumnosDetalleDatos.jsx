@@ -6,7 +6,7 @@ class DetalleDatos extends Component {
     this.state = {
       error: null,
       isLoaded: false,
-      alumno: [],
+      alumno: {},
       clases: []
     };
   }
@@ -47,13 +47,12 @@ class DetalleDatos extends Component {
     formData.append("dni", event.target.dni.value);
     formData.append("fecha_nac", event.target.fecha_nac.value);
     formData.append("tel", event.target.tel.value);
+    formData.append("activo", event.target.alumno_activo.checked);
 
-    let selectElement = document.getElementById("clases");
-    let selectedValues = Array.from(selectElement.selectedOptions).map(
-      option => option.value
-    );
-
-    formData.append("clases", selectedValues);
+    let selectedValues = [...event.target.clases];
+    selectedValues.forEach(elem => {
+      elem.selected && formData.append("clases", elem.value);
+    });
 
     fetch("http://localhost:8000/alumnos/" + this.props.alumno + "/", {
       method: "PUT",
@@ -89,7 +88,7 @@ class DetalleDatos extends Component {
                       className="form-control"
                       placeholder=""
                       defaultValue={
-                        this.state.alumno.length !== 0
+                        Object.keys(this.state.alumno).length !== 0
                           ? this.state.alumno.nombre
                           : ""
                       }
@@ -112,7 +111,7 @@ class DetalleDatos extends Component {
                       className="form-control"
                       placeholder=""
                       defaultValue={
-                        this.state.alumno.length !== 0
+                        Object.keys(this.state.alumno).length !== 0
                           ? this.state.alumno.apellido
                           : ""
                       }
@@ -135,7 +134,7 @@ class DetalleDatos extends Component {
                       id="fecha_nac"
                       className="form-control"
                       defaultValue={
-                        this.state.alumno.length !== 0
+                        Object.keys(this.state.alumno).length !== 0
                           ? this.state.alumno.fecha_nac
                           : ""
                       }
@@ -151,7 +150,7 @@ class DetalleDatos extends Component {
                       id="dni"
                       className="form-control"
                       defaultValue={
-                        this.state.alumno.length !== 0
+                        Object.keys(this.state.alumno).length !== 0
                           ? this.state.alumno.dni
                           : ""
                       }
@@ -169,7 +168,7 @@ class DetalleDatos extends Component {
                       id="direccion"
                       className="form-control"
                       defaultValue={
-                        this.state.alumno.length !== 0
+                        Object.keys(this.state.alumno).length !== 0
                           ? this.state.alumno.direccion
                           : ""
                       }
@@ -185,7 +184,7 @@ class DetalleDatos extends Component {
                       id="ciudad"
                       className="form-control"
                       defaultValue={
-                        this.state.alumno.length !== 0
+                        Object.keys(this.state.alumno).length !== 0
                           ? this.state.alumno.ciudad
                           : "Rosario"
                       }
@@ -201,7 +200,7 @@ class DetalleDatos extends Component {
                       id="tel"
                       className="form-control"
                       defaultValue={
-                        this.state.alumno.length !== 0
+                        Object.keys(this.state.alumno).length !== 0
                           ? this.state.alumno.tel
                           : ""
                       }
@@ -220,7 +219,7 @@ class DetalleDatos extends Component {
                       data-placeholder="Choose a Category"
                       tabIndex="1"
                       defaultValue={
-                        this.state.alumno.length !== 0
+                        Object.keys(this.state.alumno).length !== 0
                           ? this.state.alumno.membresia
                           : ""
                       }
@@ -254,9 +253,9 @@ class DetalleDatos extends Component {
                             " - " +
                             row.hora_inicio +
                             " - " +
-                            row.profesor_.nombre +
+                            row.profesor.nombre +
                             ", " +
-                            row.profesor_.apellido +
+                            row.profesor.apellido +
                             " - " +
                             row.nombre}
                         </option>
@@ -273,6 +272,12 @@ class DetalleDatos extends Component {
                         id="alumno_activo"
                         name="alumnoEstado"
                         className="custom-control-input"
+                        defaultChecked={
+                          this.state.alumno.activo
+                          // Object.keys(this.state.alumno).length !== 0
+                          //   ? this.state.alumno.activo
+                          //   : ""
+                        }
                       />
                       <label
                         className="custom-control-label"
@@ -287,6 +292,12 @@ class DetalleDatos extends Component {
                         id="alumno_noactivo"
                         name="alumnoEstado"
                         className="custom-control-input"
+                        defaultChecked={
+                          !this.state.alumno.activo
+                          // Object.keys(this.state.alumno).length !== 0
+                          //   ? !this.state.alumno.activo
+                          //   : ""
+                        }
                       />
                       <label
                         className="custom-control-label"
