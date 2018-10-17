@@ -12,8 +12,8 @@ class Contenido extends Component {
           <div className="card">
             <div className="card-header bg-info">
               <h4 className="m-b-0 text-white">
-                {Object.keys(this.props.main).length !== 0
-                  ? "Detalle Alumno " + this.props.main.pk
+                {Object.keys(this.props.tabDatos.main).length !== 0
+                  ? "Detalle Alumno " + this.props.tabDatos.main.pk
                   : "Nuevo Alumno"}
               </h4>
             </div>
@@ -29,7 +29,7 @@ class Contenido extends Component {
                     <span className="hidden-xs-down">Datos</span>
                   </a>
                 </li>
-                {Object.keys(this.props.main).length !== 0 ? (
+                {Object.keys(this.props.tabDatos.main).length !== 0 ? (
                   <React.Fragment>
                     <li className="nav-item">
                       <a
@@ -58,10 +58,9 @@ class Contenido extends Component {
                 <div className="tab-pane active" id="datos" role="tabpanel">
                   <div className="col-md-12">
                     <DetalleDatos
-                      main={this.props.main}
-                      select={this.props.select}
-                      url_main={this.props.url_main}
-                      url_select={this.props.url_select}
+                      main={this.props.tabDatos.main}
+                      select={this.props.tabDatos.select}
+                      url_save={this.props.url_main}
 
                       //   this.props.match.params.id === undefined
                       //     ? ""
@@ -70,12 +69,12 @@ class Contenido extends Component {
                     />
                   </div>
                 </div>
-                {Object.keys(this.props.main).length !== 0 ? (
+                {Object.keys(this.props.tabDatos.main).length !== 0 ? (
                   <React.Fragment>
                     <div className="tab-pane" id="pagos" role="tabpanel">
                       <div className="col-md-12">
                         <DetallePagos
-                          pagos={this.props.pagos}
+                          pagos={this.props.tabPagos}
                           // alumno={
                           //   this.props.match.params.id === undefined
                           //     ? ""
@@ -87,7 +86,7 @@ class Contenido extends Component {
                     <div className="tab-pane" id="asistencias" role="tabpanel">
                       <div className="col-md-12">
                         <DetalleAsistencias
-                          asistencias={this.props.asistencias}
+                          asistencias={this.props.tabAsistencias}
                           // alumno={
                           //   this.props.match.params.id === undefined
                           //     ? ""
@@ -156,10 +155,12 @@ class AlumnosDetalle extends Component {
       } else {
         return (
           <Contenido
-            main={this.state.resultData.items}
-            select={this.state.selectData.items}
-            asistencias={this.state.asistencias}
-            pagos={this.state.pagos}
+            tabDatos={{
+              main: this.state.resultData.items,
+              select: this.state.selectData.items
+            }}
+            tabAsistencias={this.state.asistencias}
+            tabPagos={this.state.pagos}
           />
         );
       }
