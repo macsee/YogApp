@@ -15,6 +15,10 @@ import Navbar from "./components/navbar";
 import Agenda from "./components/agenda/agendaMain";
 import Alumnos from "./components/alumnos/alumnosMain";
 import AlumnosDetalle from "./components/alumnos/alumnosDetalle";
+import Clases from "./components/clases/clasesMain";
+import ClasesDetalle from "./components/clases/clasesDetalle";
+import Profesores from "./components/profesores/profesoresMain";
+import ProfesoresDetalle from "./components/profesores/profesoresDetalle";
 import Sidebar from "./components/sidebar";
 
 class App extends Component {
@@ -63,16 +67,83 @@ class App extends Component {
             <div className="container-fluid">
               <Switch>
                 <Route exact path="/" component={Agenda} />
-                <Route exact path="/alumnos" component={Alumnos} />
+                <Route
+                  exact
+                  path="/alumnos"
+                  render={props => (
+                    <Alumnos
+                      {...props}
+                      url={"/alumnos/"}
+                      url_nuevo={"/alumnos/detalle/"}
+                      url_detalle={"/alumnos/detalle/"}
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/clases"
+                  render={props => (
+                    <Clases
+                      {...props}
+                      url={"/clases/"}
+                      url_nuevo={"/clases/detalle/"}
+                      url_detalle={"/clases/detalle/"}
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/profesores"
+                  render={props => (
+                    <Profesores
+                      {...props}
+                      url={"/profesores/"}
+                      url_nuevo={"/profesores/detalle/"}
+                      url_detalle={"/profesores/detalle/"}
+                    />
+                  )}
+                />
                 <Route
                   exact
                   path="/alumnos/detalle/:id"
-                  component={AlumnosDetalle}
+                  render={props => (
+                    <AlumnosDetalle
+                      {...props}
+                      url_main={"/alumnos/"}
+                      url_select={"/clases/"}
+                    />
+                  )}
                 />
                 <Route
                   exact
                   path="/alumnos/detalle/"
-                  component={AlumnosDetalle}
+                  render={props => (
+                    <AlumnosDetalle
+                      {...props}
+                      url_main={"/alumnos/"}
+                      url_select={"/clases/"}
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/clases/detalle/:id"
+                  component={ClasesDetalle}
+                />
+                <Route
+                  exact
+                  path="/clases/detalle/"
+                  component={ClasesDetalle}
+                />
+                <Route
+                  exact
+                  path="/profesores/detalle/:id"
+                  component={ProfesoresDetalle}
+                />
+                <Route
+                  exact
+                  path="/profesores/detalle/"
+                  component={ProfesoresDetalle}
                 />
               </Switch>
             </div>

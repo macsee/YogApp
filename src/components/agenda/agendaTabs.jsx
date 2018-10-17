@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { TabContent, TabPane, Nav, NavItem, NavLink } from "reactstrap";
 import classnames from "classnames";
-import Table from "./table";
+import AgendaTabsContent from "./agendaTabsContent";
 
-class Tabs extends Component {
+class AgendaTabs extends Component {
   constructor(props) {
     // console.log("Holis soy el constructor");
     super(props);
@@ -18,8 +18,6 @@ class Tabs extends Component {
 
   toggle = tab => {
     if (this.state.activeTab !== tab) {
-      // let temp = { ...this.state, activeTab: tab };
-      // this.setState(temp);
       this.setState({ ...this.state, activeTab: tab });
     }
   };
@@ -154,25 +152,25 @@ class Tabs extends Component {
         </Nav>
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="LU">
-            <Table dia="LU" />
+            <AgendaTabsContent dia="LU" />
           </TabPane>
           <TabPane tabId="MA">
-            <Table dia="MA" />
+            <AgendaTabsContent dia="MA" />
           </TabPane>
           <TabPane tabId="MI">
-            <Table dia="MI" />
+            <AgendaTabsContent dia="MI" />
           </TabPane>
           <TabPane tabId="JU">
-            <Table dia="JU" />
+            <AgendaTabsContent dia="JU" />
           </TabPane>
           <TabPane tabId="VI">
-            <Table dia="VI" />
+            <AgendaTabsContent dia="VI" />
           </TabPane>
           <TabPane tabId="SA">
-            <Table dia="SA" />
+            <AgendaTabsContent dia="SA" />
           </TabPane>
           <TabPane tabId="DO">
-            <Table dia="DO" />
+            <AgendaTabsContent dia="DO" />
           </TabPane>
         </TabContent>
       </React.Fragment>
@@ -180,4 +178,4 @@ class Tabs extends Component {
   }
 }
 
-export default Tabs;
+export default AgendaTabs;

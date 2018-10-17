@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
-import Tabs from "./tabs";
-import Sidepanel from "./sidepanel";
+import AgendaTabs from "./agendaTabs";
+// import Sidepanel from "./agendaSidePanel";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
@@ -29,7 +29,7 @@ class Agenda extends Component {
   render() {
     return (
       <div className="row">
-        <div className="col-md-8">
+        <div className="col-md-12">
           <div className="card">
             <div className="card-header bg-white">
               <div className="form-group row">
@@ -46,13 +46,13 @@ class Agenda extends Component {
               </div>
             </div>
             <div className="card-body">
-              <Tabs fecha={this.state.startDate} />
+              <AgendaTabs fecha={this.state.startDate} />
             </div>
           </div>
         </div>
-        <div className="col-md-4">
+        {/* <div className="col-md-4">
           <Sidepanel />
-        </div>
+        </div> */}
       </div>
     );
   }

@@ -74,7 +74,7 @@ class DetallePagos extends Component {
               <h3 className="m-b-0 font-light">Saldo:</h3>
               <span className="font-14 text-muted">A fecha 11/09/18</span>
             </div>
-            {this.getDeuda(this.props.alumno.pagos)}
+            {this.getDeuda(this.props.pagos)}
           </div>
         </div>
         <div className="card-body">

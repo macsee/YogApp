@@ -3,8 +3,7 @@ import { DBComponent } from "../../utils/dbComponent.jsx";
 
 class Contenido2 extends Component {
   verDetalle = id => {
-    console.log(this.props);
-    this.props.history.push(this.props.url_detalle + id);
+    this.props.history.push("/alumnos/detalle/" + id);
   };
 
   render() {
@@ -19,7 +18,6 @@ class Contenido2 extends Component {
                 <th className="border-top-0">#</th>
                 <th className="border-top-0">NOMBRE</th>
                 <th className="border-top-0">TEL</th>
-                <th className="border-top-0">ESTADO</th>
               </tr>
             </thead>
             <tbody>
@@ -38,17 +36,6 @@ class Contenido2 extends Component {
                   <td>
                     <span className="txt-oflo">{row.tel}</span>
                   </td>
-                  <td>
-                    {row.activo ? (
-                      <span className="label label-success label-rounded">
-                        Activo
-                      </span>
-                    ) : (
-                      <span className="label label-danger label-rounded">
-                        Inactivo
-                      </span>
-                    )}
-                  </td>
                 </tr>
               ))}
             </tbody>
@@ -60,8 +47,8 @@ class Contenido2 extends Component {
 }
 
 class Contenido1 extends Component {
-  nuevo = () => {
-    this.props.history.push(this.props.url_nuevo);
+  nuevoAlumno = () => {
+    this.props.history.push("/profesores/detalle/");
   };
 
   render() {
@@ -69,13 +56,13 @@ class Contenido1 extends Component {
       <div className="card">
         <div className="card-body">
           <div className="float-left">
-            <h4 className="card-title mb-0">Alumnos</h4>
+            <h4 className="card-title mb-0">Profesores</h4>
           </div>
           <div className="float-right">
             <button
               className="btn btn-info waves-effect waves-light"
               type="button"
-              onClick={() => this.nuevo()}
+              onClick={() => this.nuevoAlumno()}
             >
               <i className="mdi mdi-playlist-plus" /> Nuevo
             </button>
@@ -106,36 +93,32 @@ class Contenido1 extends Component {
   }
 }
 
-class Alumnos extends Component {
+class Profesores extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      resultData: null
+      profesorData: null
     };
   }
 
   componentDidMount() {
-    const db = new DBComponent();
-    db.getData(this.props.url, x => {
+    const dbProfesor = new DBComponent();
+    dbProfesor.getData("http://localhost:8000/profesores/", x => {
       this.setState({
         ...this.state,
-        resultData: x
+        profesorData: x
       });
     });
   }
 
   render() {
-    if (this.state.resultData) {
-      if (!this.state.resultData.error) {
+    if (this.state.profesorData) {
+      if (!this.state.profesorData.error) {
         return (
-          <Contenido1
-            history={this.props.history}
-            url_nuevo={this.props.url_nuevo}
-          >
+          <Contenido1>
             <Contenido2
-              data={this.state.resultData.items}
+              data={this.state.profesorData.items}
               history={this.props.history}
-              url_detalle={this.props.url_detalle}
             />
           </Contenido1>
         );
@@ -148,4 +131,4 @@ class Alumnos extends Component {
   }
 }
 
-export default Alumnos;
+export default Profesores;

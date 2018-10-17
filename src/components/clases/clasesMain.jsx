@@ -3,8 +3,7 @@ import { DBComponent } from "../../utils/dbComponent.jsx";
 
 class Contenido2 extends Component {
   verDetalle = id => {
-    console.log(this.props);
-    this.props.history.push(this.props.url_detalle + id);
+    this.props.history.push("/clases/detalle/" + id);
   };
 
   render() {
@@ -17,9 +16,11 @@ class Contenido2 extends Component {
             <thead>
               <tr>
                 <th className="border-top-0">#</th>
+                <th className="border-top-0">DIA</th>
+                <th className="border-top-0">HORA INICIO</th>
+                <th className="border-top-0">HORA FIN</th>
+                <th className="border-top-0">PROFESOR</th>
                 <th className="border-top-0">NOMBRE</th>
-                <th className="border-top-0">TEL</th>
-                <th className="border-top-0">ESTADO</th>
               </tr>
             </thead>
             <tbody>
@@ -31,23 +32,21 @@ class Contenido2 extends Component {
                 >
                   <td className="txt-oflo">{row.pk} </td>
                   <td>
+                    <span className="txt-oflo">{row.dia}</span>
+                  </td>
+                  <td>
+                    <span className="txt-oflo">{row.hora_inicio}</span>
+                  </td>
+                  <td>
+                    <span className="txt-oflo">{row.hora_fin}</span>
+                  </td>
+                  <td>
                     <span className="txt-oflo">
-                      {row.nombre + " " + row.apellido}
+                      {row.profesor.apellido + ", " + row.profesor.nombre}
                     </span>
                   </td>
                   <td>
-                    <span className="txt-oflo">{row.tel}</span>
-                  </td>
-                  <td>
-                    {row.activo ? (
-                      <span className="label label-success label-rounded">
-                        Activo
-                      </span>
-                    ) : (
-                      <span className="label label-danger label-rounded">
-                        Inactivo
-                      </span>
-                    )}
+                    <span className="txt-oflo">{row.nombre}</span>
                   </td>
                 </tr>
               ))}
@@ -60,8 +59,8 @@ class Contenido2 extends Component {
 }
 
 class Contenido1 extends Component {
-  nuevo = () => {
-    this.props.history.push(this.props.url_nuevo);
+  nuevaClase = () => {
+    this.props.history.push("/clases/detalle/");
   };
 
   render() {
@@ -69,36 +68,17 @@ class Contenido1 extends Component {
       <div className="card">
         <div className="card-body">
           <div className="float-left">
-            <h4 className="card-title mb-0">Alumnos</h4>
+            <h4 className="card-title mb-0">Clases</h4>
           </div>
           <div className="float-right">
             <button
               className="btn btn-info waves-effect waves-light"
               type="button"
-              onClick={() => this.nuevo()}
+              onClick={() => this.nuevaClase()}
             >
               <i className="mdi mdi-playlist-plus" /> Nuevo
             </button>
           </div>
-        </div>
-        <div className="card-body">
-          <form className="m-t-20 form-horizontal">
-            <div className="form-group row">
-              <div className="col-md-6">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="inputHorizontalSuccess"
-                  placeholder="Apellido"
-                />
-              </div>
-              <div className="form-actions">
-                <button className="btn btn-primary" type="submit">
-                  Buscar
-                </button>
-              </div>
-            </div>
-          </form>
         </div>
         {this.props.children}
       </div>
@@ -106,36 +86,32 @@ class Contenido1 extends Component {
   }
 }
 
-class Alumnos extends Component {
+class Clases extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      resultData: null
+      clasesData: null
     };
   }
 
   componentDidMount() {
-    const db = new DBComponent();
-    db.getData(this.props.url, x => {
+    const dbAlumno = new DBComponent();
+    dbAlumno.getData("http://localhost:8000/clases/", x => {
       this.setState({
         ...this.state,
-        resultData: x
+        clasesData: x
       });
     });
   }
 
   render() {
-    if (this.state.resultData) {
-      if (!this.state.resultData.error) {
+    if (this.state.clasesData) {
+      if (!this.state.clasesData.error) {
         return (
-          <Contenido1
-            history={this.props.history}
-            url_nuevo={this.props.url_nuevo}
-          >
+          <Contenido1 history={this.props.history}>
             <Contenido2
-              data={this.state.resultData.items}
+              data={this.state.clasesData.items}
               history={this.props.history}
-              url_detalle={this.props.url_detalle}
             />
           </Contenido1>
         );
@@ -148,4 +124,4 @@ class Alumnos extends Component {
   }
 }
 
-export default Alumnos;
+export default Clases;

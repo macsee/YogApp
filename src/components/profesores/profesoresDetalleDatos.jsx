@@ -12,7 +12,7 @@ class DetalleDatos extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    const db = new DBComponent();
+    const dbProfesor = new DBComponent();
     this.setState({ ...this.state, texto_boton: "Guardando..." });
 
     const formData = new FormData();
@@ -28,9 +28,9 @@ class DetalleDatos extends Component {
       elem.selected && formData.append("clases", elem.value);
     });
 
-    if (Object.keys(this.props.main).length !== 0) {
-      db.saveData(
-        this.props.url_main + this.props.main.pk + "/",
+    if (Object.keys(this.props.profesor).length !== 0) {
+      dbProfesor.saveData(
+        "http://localhost:8000/profesores/" + this.props.profesor.pk + "/",
         formData,
         "PUT",
         x => {
@@ -50,20 +50,25 @@ class DetalleDatos extends Component {
         }
       );
     } else {
-      db.sendData(this.props.url_main, formData, "POST", x => {
-        if (x.error) {
+      dbProfesor.sendData(
+        "http://localhost:8000/profesores/",
+        formData,
+        "POST",
+        x => {
+          if (x.error) {
+            this.setState({
+              ...this.state,
+              texto_boton: "ERROR!",
+              clase_boton: "btn btn-danger"
+            });
+          }
           this.setState({
             ...this.state,
-            texto_boton: "ERROR!",
-            clase_boton: "btn btn-danger"
+            texto_boton: "Guardar",
+            clase_boton: "btn btn-success"
           });
         }
-        this.setState({
-          ...this.state,
-          texto_boton: "Guardar",
-          clase_boton: "btn btn-success"
-        });
-      });
+      );
     }
   };
 
@@ -89,8 +94,8 @@ class DetalleDatos extends Component {
                       className="form-control"
                       placeholder=""
                       defaultValue={
-                        Object.keys(this.props.main).length !== 0
-                          ? this.props.main.nombre
+                        Object.keys(this.props.profesor).length !== 0
+                          ? this.props.profesor.nombre
                           : ""
                       }
                       required
@@ -112,8 +117,8 @@ class DetalleDatos extends Component {
                       className="form-control"
                       placeholder=""
                       defaultValue={
-                        Object.keys(this.props.main).length !== 0
-                          ? this.props.main.apellido
+                        Object.keys(this.props.profesor).length !== 0
+                          ? this.props.profesor.apellido
                           : ""
                       }
                       required
@@ -135,8 +140,8 @@ class DetalleDatos extends Component {
                       id="fecha_nac"
                       className="form-control"
                       defaultValue={
-                        Object.keys(this.props.main).length !== 0
-                          ? this.props.main.fecha_nac
+                        Object.keys(this.props.profesor).length !== 0
+                          ? this.props.profesor.fecha_nac
                           : ""
                       }
                     />
@@ -151,8 +156,8 @@ class DetalleDatos extends Component {
                       id="dni"
                       className="form-control"
                       defaultValue={
-                        Object.keys(this.props.main).length !== 0
-                          ? this.props.main.dni
+                        Object.keys(this.props.profesor).length !== 0
+                          ? this.props.profesor.dni
                           : ""
                       }
                     />
@@ -169,8 +174,8 @@ class DetalleDatos extends Component {
                       id="direccion"
                       className="form-control"
                       defaultValue={
-                        Object.keys(this.props.main).length !== 0
-                          ? this.props.main.direccion
+                        Object.keys(this.props.profesor).length !== 0
+                          ? this.props.profesor.direccion
                           : ""
                       }
                     />
@@ -185,8 +190,8 @@ class DetalleDatos extends Component {
                       id="ciudad"
                       className="form-control"
                       defaultValue={
-                        Object.keys(this.props.main).length !== 0
-                          ? this.props.main.ciudad
+                        Object.keys(this.props.profesor).length !== 0
+                          ? this.props.profesor.ciudad
                           : "Rosario"
                       }
                     />
@@ -201,8 +206,8 @@ class DetalleDatos extends Component {
                       id="tel"
                       className="form-control"
                       defaultValue={
-                        Object.keys(this.props.main).length !== 0
-                          ? this.props.main.tel
+                        Object.keys(this.props.profesor).length !== 0
+                          ? this.props.profesor.tel
                           : ""
                       }
                     />
@@ -220,8 +225,8 @@ class DetalleDatos extends Component {
                       data-placeholder="Choose a Category"
                       tabIndex="1"
                       defaultValue={
-                        Object.keys(this.props.main).length !== 0
-                          ? this.props.main.membresia
+                        Object.keys(this.props.profesor).length !== 0
+                          ? this.props.profesor.membresia
                           : ""
                       }
                     >
@@ -244,12 +249,12 @@ class DetalleDatos extends Component {
                       multiple
                       tabIndex="1"
                       defaultValue={
-                        Object.keys(this.props.main).length !== 0
-                          ? this.props.main.clases
+                        Object.keys(this.props.profesor).length !== 0
+                          ? this.props.profesor.clases
                           : []
                       }
                     >
-                      {this.props.select.map((row, i) => (
+                      {this.props.clases.map((row, i) => (
                         <option key={i} value={row.pk}>
                           {row.dia +
                             " - " +
@@ -275,8 +280,8 @@ class DetalleDatos extends Component {
                         name="alumnoEstado"
                         className="custom-control-input"
                         defaultChecked={
-                          Object.keys(this.props.main).length !== 0
-                            ? this.props.main.activo
+                          Object.keys(this.props.profesor).length !== 0
+                            ? this.props.profesor.activo
                             : true
                         }
                       />
@@ -294,8 +299,8 @@ class DetalleDatos extends Component {
                         name="alumnoEstado"
                         className="custom-control-input"
                         defaultChecked={
-                          Object.keys(this.props.main).length !== 0
-                            ? !this.props.main.activo
+                          Object.keys(this.props.profesor).length !== 0
+                            ? !this.props.profesor.activo
                             : false
                         }
                       />
