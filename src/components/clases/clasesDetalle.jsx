@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import DetalleDatos from "./clasesDetalleDatos";
 import { DBComponent } from "../../utils/dbComponent.jsx";
 
-class Contenido extends Component {
+class Tabs extends Component {
   render() {
     return (
       <div className="row">
@@ -10,8 +10,8 @@ class Contenido extends Component {
           <div className="card">
             <div className="card-header bg-info">
               <h4 className="m-b-0 text-white">
-                {Object.keys(this.props.clase).length !== 0
-                  ? "Detalle Clase " + this.props.clase.pk
+                {Object.keys(this.props.tabDatos.main).length !== 0
+                  ? "Detalle Clase #" + this.props.tabDatos.main.pk
                   : "Nueva Clase"}
               </h4>
             </div>
@@ -32,8 +32,10 @@ class Contenido extends Component {
                 <div className="tab-pane active" id="datos" role="tabpanel">
                   <div className="col-md-12">
                     <DetalleDatos
-                      profesores={this.props.profesores}
-                      clase={this.props.clase}
+                      main={this.props.tabDatos.main}
+                      select={this.props.tabDatos.select}
+                      url_main={this.props.tabDatos.url_main}
+
                       //   this.props.match.params.id === undefined
                       //     ? ""
                       //     : this.props.match.params.id
@@ -54,50 +56,52 @@ class ClasesDetalle extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      claseData: null,
-      profesoresData: null
+      resultData: null,
+      selectData: null
     };
   }
 
   componentDidMount() {
-    const dbProfesores = new DBComponent();
+    const dbSelect = new DBComponent();
 
     if (this.props.match.params.id) {
-      const dbClase = new DBComponent();
+      const dbMain = new DBComponent();
 
-      let url =
-        "http://localhost:8000/clases/" + this.props.match.params.id + "/";
+      let url = this.props.url_main + this.props.match.params.id + "/";
 
-      dbClase.getData(url, x => {
+      dbMain.getData(url, x => {
         this.setState({
           ...this.state,
-          claseData: x
+          resultData: x
         });
       });
     } else {
       this.setState({
         ...this.state,
-        claseData: { items: [] }
+        resultData: { items: [] }
       });
     }
 
-    dbProfesores.getData("http://localhost:8000/profesores/", x => {
+    dbSelect.getData(this.props.url_select, x => {
       this.setState({
         ...this.state,
-        profesoresData: x
+        selectData: x
       });
     });
   }
 
   render() {
-    if (this.state.claseData && this.state.profesoresData) {
-      if (this.state.claseData.error || this.state.profesoresData.error) {
+    if (this.state.resultData && this.state.selectData) {
+      if (this.state.resultData.error || this.state.selectData.error) {
         return <h2>Error de conexión</h2>;
       } else {
         return (
-          <Contenido
-            profesores={this.state.profesoresData.items}
-            clase={this.state.claseData.items}
+          <Tabs
+            tabDatos={{
+              main: this.state.resultData.items,
+              select: this.state.selectData.items,
+              url_main: this.props.url_main
+            }}
           />
         );
       }

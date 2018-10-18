@@ -3,7 +3,8 @@ import { DBComponent } from "../../utils/dbComponent.jsx";
 
 class Contenido2 extends Component {
   verDetalle = id => {
-    this.props.history.push("/clases/detalle/" + id);
+    console.log(this.props);
+    this.props.history.push(this.props.url_detalle + id);
   };
 
   render() {
@@ -59,8 +60,8 @@ class Contenido2 extends Component {
 }
 
 class Contenido1 extends Component {
-  nuevaClase = () => {
-    this.props.history.push("/clases/detalle/");
+  nuevo = () => {
+    this.props.history.push(this.props.url_nuevo);
   };
 
   render() {
@@ -74,7 +75,7 @@ class Contenido1 extends Component {
             <button
               className="btn btn-info waves-effect waves-light"
               type="button"
-              onClick={() => this.nuevaClase()}
+              onClick={() => this.nuevo()}
             >
               <i className="mdi mdi-playlist-plus" /> Nuevo
             </button>
@@ -90,29 +91,26 @@ class Clases extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      clasesData: null
+      resultData: null
     };
   }
 
   componentDidMount() {
-    const dbAlumno = new DBComponent();
-    dbAlumno.getData("http://localhost:8000/clases/", x => {
+    const db = new DBComponent();
+    db.getData(this.props.url_main, x => {
       this.setState({
         ...this.state,
-        clasesData: x
+        resultData: x
       });
     });
   }
 
   render() {
-    if (this.state.clasesData) {
-      if (!this.state.clasesData.error) {
+    if (this.state.resultData) {
+      if (!this.state.resultData.error) {
         return (
-          <Contenido1 history={this.props.history}>
-            <Contenido2
-              data={this.state.clasesData.items}
-              history={this.props.history}
-            />
+          <Contenido1 {...this.props}>
+            <Contenido2 {...this.props} data={this.state.resultData.items} />
           </Contenido1>
         );
       } else {

@@ -12,7 +12,7 @@ class DetalleDatos extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    const db = new DBComponent();
+    const dbClase = new DBComponent();
     this.setState({ ...this.state, texto_boton: "Guardando..." });
 
     const formData = new FormData();
@@ -28,9 +28,9 @@ class DetalleDatos extends Component {
       elem.selected && formData.append("clases", elem.value);
     });
 
-    if (Object.keys(this.props.main).length !== 0) {
-      db.saveData(
-        this.props.url_main + this.props.main.pk + "/",
+    if (Object.keys(this.props.alumno).length !== 0) {
+      dbClase.saveData(
+        "http://localhost:8000/clases/" + this.props.alumno.pk + "/",
         formData,
         "PUT",
         x => {
@@ -50,7 +50,7 @@ class DetalleDatos extends Component {
         }
       );
     } else {
-      db.saveData(this.props.url_main, formData, "POST", x => {
+      dbClase.sendData("http://localhost:8000/clases/", formData, "POST", x => {
         if (x.error) {
           this.setState({
             ...this.state,
@@ -216,13 +216,13 @@ class DetalleDatos extends Component {
                       className="form-control custom-select"
                       tabIndex="1"
                       defaultValue={
-                        ""
+                        console.log(this.props)
                         // Object.keys(this.props.profesores).length !== 0
                         //   ? this.props.clase.profesor
                         //   : []
                       }
                     >
-                      {this.props.select.map((row, i) => (
+                      {this.props.profesores.map((row, i) => (
                         <option key={i} value={row.pk}>
                           {row.apellido + ", " + row.nombre}
                         </option>

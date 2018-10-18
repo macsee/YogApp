@@ -13,7 +13,9 @@ import "./App.css";
 import NavbarWhite from "./components/navbarWhite";
 import Navbar from "./components/navbar";
 import Agenda from "./components/agenda/agendaMain";
-import Alumnos from "./components/alumnos/alumnosMain";
+// import Alumnos from "./components/alumnos/alumnosMain";
+import SectionMainView from "./utils/sectionMainView";
+import Alumnos from "./components/alumnos/alumnos";
 import AlumnosDetalle from "./components/alumnos/alumnosDetalle";
 import Clases from "./components/clases/clasesMain";
 import ClasesDetalle from "./components/clases/clasesDetalle";
@@ -71,12 +73,15 @@ class App extends Component {
                   exact
                   path="/alumnos"
                   render={props => (
-                    <Alumnos
+                    <SectionMainView
                       {...props}
-                      url={"/alumnos/"}
+                      titulo={"Alumnos"}
+                      url_main={"/alumnos/"}
                       url_nuevo={"/alumnos/detalle/"}
                       url_detalle={"/alumnos/detalle/"}
-                    />
+                    >
+                      <Alumnos />
+                    </SectionMainView>
                   )}
                 />
                 <Route
@@ -85,7 +90,7 @@ class App extends Component {
                   render={props => (
                     <Clases
                       {...props}
-                      url={"/clases/"}
+                      url_main={"/clases/"}
                       url_nuevo={"/clases/detalle/"}
                       url_detalle={"/clases/detalle/"}
                     />
@@ -97,7 +102,7 @@ class App extends Component {
                   render={props => (
                     <Profesores
                       {...props}
-                      url={"/profesores/"}
+                      url_main={"/profesores/"}
                       url_nuevo={"/profesores/detalle/"}
                       url_detalle={"/profesores/detalle/"}
                     />
@@ -128,22 +133,46 @@ class App extends Component {
                 <Route
                   exact
                   path="/clases/detalle/:id"
-                  component={ClasesDetalle}
+                  render={props => (
+                    <ClasesDetalle
+                      {...props}
+                      url_main={"/clases/"}
+                      url_select={"/profesores/"}
+                    />
+                  )}
                 />
                 <Route
                   exact
                   path="/clases/detalle/"
-                  component={ClasesDetalle}
+                  render={props => (
+                    <ClasesDetalle
+                      {...props}
+                      url_main={"/clases/"}
+                      url_select={"/profesores/"}
+                    />
+                  )}
                 />
                 <Route
                   exact
                   path="/profesores/detalle/:id"
-                  component={ProfesoresDetalle}
+                  render={props => (
+                    <ProfesoresDetalle
+                      {...props}
+                      url_main={"/profesores/"}
+                      url_select={"/especialidades/"}
+                    />
+                  )}
                 />
                 <Route
                   exact
                   path="/profesores/detalle/"
-                  component={ProfesoresDetalle}
+                  render={props => (
+                    <ProfesoresDetalle
+                      {...props}
+                      url_main={"/profesores/"}
+                      url_select={"/especialidades/"}
+                    />
+                  )}
                 />
               </Switch>
             </div>

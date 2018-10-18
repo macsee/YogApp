@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import DetalleDatos from "./alumnosDetalleDatos";
-import DetallePagos from "./alumnosDetallePagos";
-import DetalleAsistencias from "./alumnosDetalleAsistencias";
-import { DBComponent } from "../../utils/dbComponent.jsx";
+import DetalleDatos from "../alumnos/alumnosDetalleDatos";
+import DetallePagos from "../alumnos/alumnosDetallePagos";
+import DetalleAsistencias from "../alumnos/alumnosDetalleAsistencias";
+import { DBComponent } from "./utils/dbComponent.jsx";
 
 class Tabs extends Component {
   render() {

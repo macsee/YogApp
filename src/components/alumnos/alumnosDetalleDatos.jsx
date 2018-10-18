@@ -30,7 +30,7 @@ class DetalleDatos extends Component {
 
     if (Object.keys(this.props.main).length !== 0) {
       db.saveData(
-        this.props.url_save + this.props.main.pk + "/",
+        this.props.url_main + this.props.main.pk + "/",
         formData,
         "PUT",
         x => {
@@ -50,7 +50,7 @@ class DetalleDatos extends Component {
         }
       );
     } else {
-      db.saveData(this.props.url_save, formData, "POST", x => {
+      db.saveData(this.props.url_main, formData, "POST", x => {
         if (x.error) {
           this.setState({
             ...this.state,

@@ -116,7 +116,7 @@ class Alumnos extends Component {
 
   componentDidMount() {
     const db = new DBComponent();
-    db.getData(this.props.url, x => {
+    db.getData(this.props.url_main, x => {
       this.setState({
         ...this.state,
         resultData: x
@@ -128,15 +128,8 @@ class Alumnos extends Component {
     if (this.state.resultData) {
       if (!this.state.resultData.error) {
         return (
-          <Contenido1
-            history={this.props.history}
-            url_nuevo={this.props.url_nuevo}
-          >
-            <Contenido2
-              data={this.state.resultData.items}
-              history={this.props.history}
-              url_detalle={this.props.url_detalle}
-            />
+          <Contenido1 {...this.props}>
+            <Contenido2 {...this.props} data={this.state.resultData.items} />
           </Contenido1>
         );
       } else {
