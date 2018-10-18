@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { DBComponent } from "./dbComponent.jsx";
 
-class sectionMainView extends Component {
+class SectionMainView extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -80,4 +80,4 @@ class sectionMainView extends Component {
   }
 }
 
-export default sectionMainView;
+export default SectionMainView;
