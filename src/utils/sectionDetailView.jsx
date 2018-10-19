@@ -1,26 +1,29 @@
 import React, { Component } from "react";
-import SectionDetailTab from "./sectionDetailTab";
 
 class SectionDetailView extends Component {
   render() {
+    const childrenWithProps = React.Children.map(this.props.children, child =>
+      React.cloneElement(child, { ...this.props })
+    );
+
     return (
       <div className="row">
         <div className="col-md-12">
           <div className="card">
             <div className="card-header bg-info">
               <h4 className="m-b-0 text-white">
-                {Object.keys(this.props.match.params).length !== 0
+                {this.props.idElement
                   ? "Detalle " +
                     this.props.titulo +
                     " # " +
-                    this.props.match.params.id
+                    this.props.idElement
                   : "Nuevo " + this.props.titulo}
               </h4>
             </div>
             <div className="card-body">
               <ul className="nav nav-tabs" role="tablist">
-                {this.props.children.length !== 0
-                  ? this.props.children.map((element, i) => (
+                {Object.keys(this.props.children).length !== 0
+                  ? React.Children.map(this.props.children, (element, i) => (
                       <li key={i} className="nav-item">
                         <a
                           className={"nav-link " + element.props.active}
@@ -37,18 +40,17 @@ class SectionDetailView extends Component {
                   : ""}
               </ul>
               <div className="tab-content tabcontent-border">
-                {this.props.children.length !== 0
-                  ? this.props.children.map((element, i) => (
+                {/* {childrenWithProps} */}
+
+                {Object.keys(this.props.children).length !== 0
+                  ? React.Children.map(this.props.children, (element, i) => (
                       <div
                         key={i}
                         className={"tab-pane " + element.props.active}
                         id={element.props.id}
                         role="tabpanel"
                       >
-                        <div className="col-md-12">
-                          {React.cloneElement(element, { ...this.props })}
-                        </div>
-                        <div />
+                        <div className="col-md-12">{element}</div>
                       </div>
                     ))
                   : ""}
@@ -61,10 +63,3 @@ class SectionDetailView extends Component {
   }
 }
 export default SectionDetailView;
-
-{
-  /* <DetalleDatos
-                        main={this.props.tabDatos.main}
-                        select={this.props.tabDatos.select}
-                        url_main={this.props.tabDatos.url_main} */
-}

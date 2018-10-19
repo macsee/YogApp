@@ -13,10 +13,11 @@ class SectionDetailTab extends Component {
 
   componentDidMount() {
     const dbSelect = new DBComponent();
-    if (this.props.match.params.id) {
+
+    if (this.props.idElement) {
       const dbMain = new DBComponent();
 
-      let url = this.props.url_main + this.props.match.params.id + "/";
+      let url = this.props.url_main + this.props.idElement + "/";
 
       dbMain.getData(url, x => {
         this.setState({
@@ -44,18 +45,10 @@ class SectionDetailTab extends Component {
       if (this.state.resultData.error || this.state.selectData.error) {
         return <h2>Error de conexión</h2>;
       } else {
-        return (
-          <h2>{this.props.nombre}</h2>
-          //   <Tabs
-          //     tabDatos={{
-          //       main: this.state.resultData.items,
-          //       select: this.state.selectData.items,
-          //       url_main: this.props.url_main
-          //     }}
-          //     tabAsistencias={this.state.asistencias}
-          //     tabPagos={this.state.pagos}
-          //   />
-        );
+        return React.cloneElement(this.props.children, {
+          main: this.state.resultData.items,
+          select: this.state.selectData.items
+        });
       }
     } else {
       return null;
