@@ -45,10 +45,15 @@ class SectionDetailTab extends Component {
       if (this.state.resultData.error || this.state.selectData.error) {
         return <h2>Error de conexión</h2>;
       } else {
-        return React.cloneElement(this.props.children, {
-          main: this.state.resultData.items,
-          select: this.state.selectData.items
-        });
+        if (this.props.children) {
+          return React.cloneElement(this.props.children, {
+            main: this.state.resultData.items,
+            select: this.state.selectData.items,
+            url_main: this.props.url_main
+          });
+        } else {
+          return null;
+        }
       }
     } else {
       return null;

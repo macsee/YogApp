@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-class Alumnos extends Component {
+class ProfesorListado extends Component {
   render() {
     if (Object.keys(this.props.data).length === 0) {
       return <h2>No hay datos</h2>;
@@ -13,7 +13,6 @@ class Alumnos extends Component {
                 <th className="border-top-0">#</th>
                 <th className="border-top-0">NOMBRE</th>
                 <th className="border-top-0">TEL</th>
-                <th className="border-top-0">ESTADO</th>
               </tr>
             </thead>
             <tbody>
@@ -32,17 +31,6 @@ class Alumnos extends Component {
                   <td>
                     <span className="txt-oflo">{row.tel}</span>
                   </td>
-                  <td>
-                    {row.activo ? (
-                      <span className="label label-success label-rounded">
-                        Activo
-                      </span>
-                    ) : (
-                      <span className="label label-danger label-rounded">
-                        Inactivo
-                      </span>
-                    )}
-                  </td>
                 </tr>
               ))}
             </tbody>
@@ -53,4 +41,4 @@ class Alumnos extends Component {
   }
 }
 
-export default Alumnos;
+export default ProfesorListado;

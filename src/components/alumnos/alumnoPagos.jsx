@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-class DetallePagos extends Component {
+class AlumnoPagos extends Component {
   state = {};
 
   setBadgeDesc = desc => {
@@ -74,7 +74,7 @@ class DetallePagos extends Component {
               <h3 className="m-b-0 font-light">Saldo:</h3>
               <span className="font-14 text-muted">A fecha 11/09/18</span>
             </div>
-            {this.getDeuda(this.props.pagos)}
+            {this.getDeuda(this.props.main)}
           </div>
         </div>
         <div className="card-body">
@@ -120,4 +120,4 @@ class DetallePagos extends Component {
   }
 }
 
-export default DetallePagos;
+export default AlumnoPagos;

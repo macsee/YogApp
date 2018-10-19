@@ -46,29 +46,11 @@ class SectionMainView extends Component {
                 </button>
               </div>
             </div>
-            <div className="card-body">
-              <form className="m-t-20 form-horizontal">
-                <div className="form-group row">
-                  <div className="col-md-6">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="inputHorizontalSuccess"
-                      placeholder="Apellido"
-                    />
-                  </div>
-                  <div className="form-actions">
-                    <button className="btn btn-primary" type="submit">
-                      Buscar
-                    </button>
-                  </div>
-                </div>
-              </form>
-            </div>
-            {React.cloneElement(this.props.children, {
-              data: this.state.resultData.items,
-              detalle: this.verDetalle
-            })}
+            {this.props.children &&
+              React.cloneElement(this.props.children, {
+                data: this.state.resultData.items,
+                detalle: this.verDetalle
+              })}
           </div>
         );
       } else {

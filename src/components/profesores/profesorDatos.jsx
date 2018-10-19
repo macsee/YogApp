@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { DBComponent } from "../../utils/dbComponent.jsx";
 
-class DetalleDatos extends Component {
+class ProfesorDatos extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -142,22 +142,6 @@ class DetalleDatos extends Component {
                     />
                   </div>
                 </div>
-                <div className="col-md-6">
-                  <div className="form-group">
-                    <label className="control-label">DNI</label>
-                    <input
-                      type="text"
-                      name="dni"
-                      id="dni"
-                      className="form-control"
-                      defaultValue={
-                        Object.keys(this.props.main).length !== 0
-                          ? this.props.main.dni
-                          : ""
-                      }
-                    />
-                  </div>
-                </div>
               </div>
               <div className="row">
                 <div className="col-md-6">
@@ -210,33 +194,9 @@ class DetalleDatos extends Component {
                 </div>
               </div>
               <div className="row">
-                <div className="col-md-3">
-                  <div className="form-group">
-                    <label className="control-label">Membresia</label>
-                    <select
-                      name="membresia"
-                      id="membresia"
-                      className="form-control custom-select"
-                      data-placeholder="Choose a Category"
-                      tabIndex="1"
-                      defaultValue={
-                        Object.keys(this.props.main).length !== 0
-                          ? this.props.main.membresia
-                          : ""
-                      }
-                    >
-                      <option value="0">Sin Cargo</option>
-                      <option value="1">1 x Semana</option>
-                      <option value="2">2 x Semana</option>
-                      <option value="3">3 x Semana</option>
-                      <option value="4">4 x Semana</option>
-                      <option value="5">5 x Semana</option>
-                    </select>
-                  </div>
-                </div>
                 <div className="col-md-6">
                   <div className="form-group">
-                    <label>Clases</label>
+                    <label>Especialidad</label>
                     <select
                       id="clases"
                       name="clases"
@@ -245,67 +205,16 @@ class DetalleDatos extends Component {
                       tabIndex="1"
                       defaultValue={
                         Object.keys(this.props.main).length !== 0
-                          ? this.props.main.clases
+                          ? this.props.main.especialidad
                           : []
                       }
                     >
                       {this.props.select.map((row, i) => (
                         <option key={i} value={row.pk}>
-                          {row.dia +
-                            " - " +
-                            row.hora_inicio +
-                            " - " +
-                            row.profesor.nombre +
-                            ", " +
-                            row.profesor.apellido +
-                            " - " +
-                            row.nombre}
+                          {row.nombre}
                         </option>
                       ))}
                     </select>
-                  </div>
-                </div>
-                <div className="col-md-2">
-                  <div className="form-group">
-                    <label className="control-label">Estado</label>
-                    <div className="custom-control custom-radio">
-                      <input
-                        type="radio"
-                        id="alumno_activo"
-                        name="alumnoEstado"
-                        className="custom-control-input"
-                        defaultChecked={
-                          Object.keys(this.props.main).length !== 0
-                            ? this.props.main.activo
-                            : true
-                        }
-                      />
-                      <label
-                        className="custom-control-label"
-                        htmlFor="alumno_activo"
-                      >
-                        Activo
-                      </label>
-                    </div>
-                    <div className="custom-control custom-radio">
-                      <input
-                        type="radio"
-                        id="alumno_noactivo"
-                        name="alumnoEstado"
-                        className="custom-control-input"
-                        defaultChecked={
-                          Object.keys(this.props.main).length !== 0
-                            ? !this.props.main.activo
-                            : false
-                        }
-                      />
-                      <label
-                        className="custom-control-label"
-                        htmlFor="alumno_noactivo"
-                      >
-                        No Activo
-                      </label>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -324,4 +233,4 @@ class DetalleDatos extends Component {
   }
 }
 
-export default DetalleDatos;
+export default ProfesorDatos;

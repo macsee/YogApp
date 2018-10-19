@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { DBComponent } from "../../utils/dbComponent.jsx";
 
-class DetalleDatos extends Component {
+class ClaseDatos extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -12,7 +12,7 @@ class DetalleDatos extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    const dbClase = new DBComponent();
+    const db = new DBComponent();
     this.setState({ ...this.state, texto_boton: "Guardando..." });
 
     const formData = new FormData();
@@ -28,9 +28,9 @@ class DetalleDatos extends Component {
       elem.selected && formData.append("clases", elem.value);
     });
 
-    if (Object.keys(this.props.alumno).length !== 0) {
-      dbClase.saveData(
-        "http://localhost:8000/clases/" + this.props.alumno.pk + "/",
+    if (Object.keys(this.props.main).length !== 0) {
+      db.saveData(
+        this.props.url_main + this.props.main.pk + "/",
         formData,
         "PUT",
         x => {
@@ -50,7 +50,7 @@ class DetalleDatos extends Component {
         }
       );
     } else {
-      dbClase.sendData("http://localhost:8000/clases/", formData, "POST", x => {
+      db.saveData(this.props.url_main, formData, "POST", x => {
         if (x.error) {
           this.setState({
             ...this.state,
@@ -89,10 +89,9 @@ class DetalleDatos extends Component {
                       className="form-control"
                       placeholder=""
                       defaultValue={
-                        ""
-                        // Object.keys(this.props.clase).length !== 0
-                        //   ? this.props.clase.nombre
-                        //   : ""
+                        Object.keys(this.props.main).length !== 0
+                          ? this.props.main.nombre
+                          : ""
                       }
                       required
                     />
@@ -113,7 +112,11 @@ class DetalleDatos extends Component {
                       className="form-control custom-select"
                       data-placeholder=""
                       tabIndex="1"
-                      defaultValue={""}
+                      defaultValue={
+                        Object.keys(this.props.main).length !== 0
+                          ? this.props.main.dia
+                          : ""
+                      }
                     >
                       <option value="LU">Lunes</option>
                       <option value="MA">Martes</option>
@@ -134,7 +137,11 @@ class DetalleDatos extends Component {
                       className="form-control custom-select"
                       data-placeholder=""
                       tabIndex="1"
-                      defaultValue={""}
+                      defaultValue={
+                        Object.keys(this.props.main).length !== 0
+                          ? this.props.main.hora_inicio
+                          : ""
+                      }
                     >
                       <option value="0800">08:00</option>
                       <option value="0830">08:30</option>
@@ -174,7 +181,11 @@ class DetalleDatos extends Component {
                       className="form-control custom-select"
                       data-placeholder=""
                       tabIndex="1"
-                      defaultValue={""}
+                      defaultValue={
+                        Object.keys(this.props.main).length !== 0
+                          ? this.props.main.hora_fin
+                          : ""
+                      }
                     >
                       <option value="0800">08:00</option>
                       <option value="0830">08:30</option>
@@ -216,13 +227,12 @@ class DetalleDatos extends Component {
                       className="form-control custom-select"
                       tabIndex="1"
                       defaultValue={
-                        console.log(this.props)
-                        // Object.keys(this.props.profesores).length !== 0
-                        //   ? this.props.clase.profesor
-                        //   : []
+                        Object.keys(this.props.main).length !== 0
+                          ? this.props.main.profesor
+                          : ""
                       }
                     >
-                      {this.props.profesores.map((row, i) => (
+                      {this.props.select.map((row, i) => (
                         <option key={i} value={row.pk}>
                           {row.apellido + ", " + row.nombre}
                         </option>
@@ -246,4 +256,4 @@ class DetalleDatos extends Component {
   }
 }
 
-export default DetalleDatos;
+export default ClaseDatos;

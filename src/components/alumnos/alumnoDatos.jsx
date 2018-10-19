@@ -57,12 +57,14 @@ class AlumnoDatos extends Component {
             texto_boton: "ERROR!",
             clase_boton: "btn btn-danger"
           });
+        } else {
+          this.props.history.push(this.props.url_main + x.pk + "/");
+          this.setState({
+            ...this.state,
+            texto_boton: "Guardar",
+            clase_boton: "btn btn-success"
+          });
         }
-        this.setState({
-          ...this.state,
-          texto_boton: "Guardar",
-          clase_boton: "btn btn-success"
-        });
       });
     }
   };

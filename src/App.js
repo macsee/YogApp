@@ -17,8 +17,20 @@ import Agenda from "./components/agenda/agendaMain";
 import SectionMainView from "./utils/sectionMainView";
 import SectionDetailView from "./utils/sectionDetailView";
 import SectionDetailTab from "./utils/sectionDetailTab";
-import Alumnos from "./components/alumnos/alumnos";
+
+import AlumnoListado from "./components/alumnos/alumnoListado";
 import AlumnoDatos from "./components/alumnos/alumnoDatos";
+import AlumnoPagos from "./components/alumnos/alumnoPagos";
+import AlumnoAsistencias from "./components/alumnos/alumnoAsistencias";
+
+import ClaseListado from "./components/clases/claseListado";
+import ClaseDatos from "./components/clases/claseDatos";
+
+import ProfesorListado from "./components/profesores/profesorListado";
+import ProfesorDatos from "./components/profesores/profesorDatos";
+
+// import Profesores from "./components/profesores/profesores";
+// import ProfesorDatos from "./components/profesores/profesorDatos";
 // import AlumnosDetalle from "./components/alumnos/alumnosDetalle";
 // import Clases from "./components/clases/clasesMain";
 // import ClasesDetalle from "./components/clases/clasesDetalle";
@@ -75,6 +87,7 @@ class App extends Component {
                 <Route
                   exact
                   path="/alumnos"
+                  key="/alumnos"
                   render={props => (
                     <SectionMainView
                       {...props}
@@ -83,41 +96,52 @@ class App extends Component {
                       url_nuevo={"/alumnos/nuevo/"}
                       url_detalle={"/alumnos/detalle/"}
                     >
-                      <Alumnos />
+                      <AlumnoListado />
                     </SectionMainView>
                   )}
                 />
                 <Route
                   exact
-                  path="/alumnos/detalle/:id"
+                  path="/clases"
+                  key="/clases"
                   render={props => (
-                    <SectionDetailView {...props} titulo={"Alumno"}>
+                    <SectionMainView
+                      {...props}
+                      titulo={"Clases"}
+                      url_main={"/clases/"}
+                      url_nuevo={"/clases/nuevo/"}
+                      url_detalle={"/clases/detalle/"}
+                    >
+                      <ClaseListado />
+                    </SectionMainView>
+                  )}
+                />
+                <Route
+                  exact
+                  path="/profesores"
+                  key="/profesores"
+                  render={props => (
+                    <SectionMainView
+                      {...props}
+                      titulo={"Profesores"}
+                      url_main={"/profesores/"}
+                      url_nuevo={"/profesores/nuevo/"}
+                      url_detalle={"/profesores/detalle/"}
+                    >
+                      <ProfesorListado />
+                    </SectionMainView>
+                  )}
+                />
+                <Route
+                  exact
+                  path="/alumnos/nuevo/"
+                  render={() => (
+                    <SectionDetailView titulo={"Alumno"}>
                       <SectionDetailTab
                         active={"active"}
                         nombre={"Datos"}
                         id={"datos"}
-                        idElement={props.match.params.id}
                         url_main={"/alumnos/"}
-                        url_select={"/clases/"}
-                      >
-                        <AlumnoDatos />
-                      </SectionDetailTab>
-                      <SectionDetailTab
-                        active={""}
-                        nombre={"Pagos"}
-                        id={"pagos"}
-                        idElement={props.match.params.id}
-                        url_main={"/pagos/"}
-                        url_select={"/clases/"}
-                      >
-                        <AlumnoDatos />
-                      </SectionDetailTab>
-                      <SectionDetailTab
-                        active={""}
-                        nombre={"Asistencias"}
-                        id={"asistencias"}
-                        idElement={props.match.params.id}
-                        url_main={"/asistencias/"}
                         url_select={"/clases/"}
                       >
                         <AlumnoDatos />
@@ -127,9 +151,12 @@ class App extends Component {
                 />
                 <Route
                   exact
-                  path="/alumnos/nuevo/"
+                  path="/alumnos/detalle/:id"
                   render={props => (
-                    <SectionDetailView {...props} titulo={"Alumno"}>
+                    <SectionDetailView
+                      titulo={"Alumno"}
+                      idElement={props.match.params.id}
+                    >
                       <SectionDetailTab
                         active={"active"}
                         nombre={"Datos"}
@@ -138,6 +165,98 @@ class App extends Component {
                         url_select={"/clases/"}
                       >
                         <AlumnoDatos />
+                      </SectionDetailTab>
+                      <SectionDetailTab
+                        active={""}
+                        nombre={"Pagos"}
+                        id={"pagos"}
+                        url_main={"/pagos/"}
+                        url_select={""}
+                      >
+                        <AlumnoPagos />
+                      </SectionDetailTab>
+                      <SectionDetailTab
+                        active={""}
+                        nombre={"Asistencias"}
+                        id={"asistencias"}
+                        url_main={"/asistencias/"}
+                        url_select={""}
+                      >
+                        <AlumnoAsistencias />
+                      </SectionDetailTab>
+                    </SectionDetailView>
+                  )}
+                />
+                <Route
+                  exact
+                  path="/clases/nuevo/"
+                  render={() => (
+                    <SectionDetailView titulo={"Clases"}>
+                      <SectionDetailTab
+                        active={"active"}
+                        nombre={"Datos"}
+                        id={"datos"}
+                        url_main={"/clases/"}
+                        url_select={"/profesores/"}
+                      >
+                        <ClaseDatos />
+                      </SectionDetailTab>
+                    </SectionDetailView>
+                  )}
+                />
+                <Route
+                  exact
+                  path="/clases/detalle/:id"
+                  render={props => (
+                    <SectionDetailView
+                      titulo={"Clases"}
+                      idElement={props.match.params.id}
+                    >
+                      <SectionDetailTab
+                        active={"active"}
+                        nombre={"Datos"}
+                        id={"datos"}
+                        url_main={"/clases/"}
+                        url_select={"/profesores/"}
+                      >
+                        <ClaseDatos />
+                      </SectionDetailTab>
+                    </SectionDetailView>
+                  )}
+                />
+                <Route
+                  exact
+                  path="/profesores/nuevo/"
+                  render={() => (
+                    <SectionDetailView titulo={"Profesores"}>
+                      <SectionDetailTab
+                        active={"active"}
+                        nombre={"Datos"}
+                        id={"datos"}
+                        url_main={"/profesores/"}
+                        url_select={"/especialidades/"}
+                      >
+                        <ProfesorDatos />
+                      </SectionDetailTab>
+                    </SectionDetailView>
+                  )}
+                />
+                <Route
+                  exact
+                  path="/profesores/detalle/:id"
+                  render={props => (
+                    <SectionDetailView
+                      titulo={"Profesores"}
+                      idElement={props.match.params.id}
+                    >
+                      <SectionDetailTab
+                        active={"active"}
+                        nombre={"Datos"}
+                        id={"datos"}
+                        url_main={"/profesores/"}
+                        url_select={"/especialidades/"}
+                      >
+                        <ProfesorDatos />
                       </SectionDetailTab>
                     </SectionDetailView>
                   )}
