@@ -12,8 +12,6 @@ class AlumnoDatos extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    const db = new DBComponent();
-    this.setState({ ...this.state, texto_boton: "Guardando..." });
 
     const formData = new FormData();
     formData.append("nombre", event.target.nombre.value);
@@ -28,45 +26,23 @@ class AlumnoDatos extends Component {
       elem.selected && formData.append("clases", elem.value);
     });
 
-    if (Object.keys(this.props.main).length !== 0) {
-      db.saveData(
-        this.props.url_main + this.props.main.pk + "/",
-        formData,
-        "PUT",
-        x => {
-          if (x.error) {
-            this.setState({
-              ...this.state,
-              texto_boton: "ERROR!",
-              clase_boton: "btn btn-danger"
-            });
-          } else {
-            this.setState({
-              ...this.state,
-              texto_boton: "Guardar",
-              clase_boton: "btn btn-success"
-            });
-          }
-        }
-      );
-    } else {
-      db.saveData(this.props.url_main, formData, "POST", x => {
-        if (x.error) {
-          this.setState({
-            ...this.state,
-            texto_boton: "ERROR!",
-            clase_boton: "btn btn-danger"
-          });
-        } else {
-          this.props.history.push(this.props.url_main + x.pk + "/");
-          this.setState({
-            ...this.state,
-            texto_boton: "Guardar",
-            clase_boton: "btn btn-success"
-          });
-        }
-      });
-    }
+    this.setState({ ...this.state, texto_boton: "Guardando..." });
+
+    this.props.submit(formData, x => {
+      if (x.error) {
+        this.setState({
+          ...this.state,
+          texto_boton: "ERROR!",
+          clase_boton: "btn btn-danger"
+        });
+      } else {
+        this.setState({
+          ...this.state,
+          texto_boton: "Guardar",
+          clase_boton: "btn btn-success"
+        });
+      }
+    });
   };
 
   render() {

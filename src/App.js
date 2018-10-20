@@ -135,7 +135,7 @@ class App extends Component {
                 <Route
                   exact
                   path="/alumnos/nuevo/"
-                  render={() => (
+                  render={props => (
                     <SectionDetailView titulo={"Alumno"}>
                       <SectionDetailTab
                         active={"active"}
@@ -143,6 +143,8 @@ class App extends Component {
                         id={"datos"}
                         url_main={"/alumnos/"}
                         url_select={"/clases/"}
+                        url_detalle={"/alumnos/detalle/"}
+                        history={props.history}
                       >
                         <AlumnoDatos />
                       </SectionDetailTab>
@@ -190,7 +192,7 @@ class App extends Component {
                 <Route
                   exact
                   path="/clases/nuevo/"
-                  render={() => (
+                  render={props => (
                     <SectionDetailView titulo={"Clases"}>
                       <SectionDetailTab
                         active={"active"}
@@ -198,6 +200,8 @@ class App extends Component {
                         id={"datos"}
                         url_main={"/clases/"}
                         url_select={"/profesores/"}
+                        url_detalle={"/clases/detalle/"}
+                        history={props.history}
                       >
                         <ClaseDatos />
                       </SectionDetailTab>
@@ -227,7 +231,7 @@ class App extends Component {
                 <Route
                   exact
                   path="/profesores/nuevo/"
-                  render={() => (
+                  render={props => (
                     <SectionDetailView titulo={"Profesores"}>
                       <SectionDetailTab
                         active={"active"}
@@ -235,6 +239,8 @@ class App extends Component {
                         id={"datos"}
                         url_main={"/profesores/"}
                         url_select={"/especialidades/"}
+                        url_detalle={"/profesores/detalle/"}
+                        history={props.history}
                       >
                         <ProfesorDatos />
                       </SectionDetailTab>

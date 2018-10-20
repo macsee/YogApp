@@ -19,7 +19,7 @@ class DBComponent {
       body: formData
     })
       .then(res => {
-        if (res.status !== 200) {
+        if (!res.ok) {
           this.state.error = res.statusText;
         } else {
           this.state.error = null;
@@ -44,7 +44,7 @@ class DBComponent {
       method: "GET"
     })
       .then(res => {
-        if (res.status !== 200) {
+        if (!res.ok) {
           this.state.error = res.statusText;
         } else {
           this.state.error = null;

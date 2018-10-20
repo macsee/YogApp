@@ -11,6 +11,26 @@ class SectionDetailTab extends Component {
     };
   }
 
+  submit = (formData, callback) => {
+    const db = new DBComponent();
+
+    if (this.props.idElement) {
+      db.saveData(
+        this.props.url_main + this.props.idElement + "/",
+        formData,
+        "PUT",
+        x => {
+          callback(x);
+        }
+      );
+    } else {
+      db.saveData(this.props.url_main, formData, "POST", x => {
+        callback(x);
+        this.props.history.push(this.props.url_detalle + x.items.pk + "/");
+      });
+    }
+  };
+
   componentDidMount() {
     const dbSelect = new DBComponent();
 
@@ -49,7 +69,9 @@ class SectionDetailTab extends Component {
           return React.cloneElement(this.props.children, {
             main: this.state.resultData.items,
             select: this.state.selectData.items,
-            url_main: this.props.url_main
+            submit: this.submit
+            // url_main: this.props.url_main,
+            // idElement: this.props.idElement
           });
         } else {
           return null;

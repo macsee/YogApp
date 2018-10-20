@@ -12,8 +12,6 @@ class ProfesorDatos extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    const db = new DBComponent();
-    this.setState({ ...this.state, texto_boton: "Guardando..." });
 
     const formData = new FormData();
     formData.append("nombre", event.target.nombre.value);
@@ -21,50 +19,29 @@ class ProfesorDatos extends Component {
     formData.append("dni", event.target.dni.value);
     formData.append("fecha_nac", event.target.fecha_nac.value);
     formData.append("tel", event.target.tel.value);
-    formData.append("activo", event.target.alumno_activo.checked);
 
-    const selectedValues = [...event.target.clases];
+    const selectedValues = [...event.target.especialidad];
     selectedValues.forEach(elem => {
-      elem.selected && formData.append("clases", elem.value);
+      elem.selected && formData.append("especialidad", elem.value);
     });
 
-    if (Object.keys(this.props.main).length !== 0) {
-      db.saveData(
-        this.props.url_main + this.props.main.pk + "/",
-        formData,
-        "PUT",
-        x => {
-          if (x.error) {
-            this.setState({
-              ...this.state,
-              texto_boton: "ERROR!",
-              clase_boton: "btn btn-danger"
-            });
-          } else {
-            this.setState({
-              ...this.state,
-              texto_boton: "Guardar",
-              clase_boton: "btn btn-success"
-            });
-          }
-        }
-      );
-    } else {
-      db.saveData(this.props.url_main, formData, "POST", x => {
-        if (x.error) {
-          this.setState({
-            ...this.state,
-            texto_boton: "ERROR!",
-            clase_boton: "btn btn-danger"
-          });
-        }
+    this.setState({ ...this.state, texto_boton: "Guardando..." });
+
+    this.props.submit(formData, x => {
+      if (x.error) {
+        this.setState({
+          ...this.state,
+          texto_boton: "ERROR!",
+          clase_boton: "btn btn-danger"
+        });
+      } else {
         this.setState({
           ...this.state,
           texto_boton: "Guardar",
           clase_boton: "btn btn-success"
         });
-      });
-    }
+      }
+    });
   };
 
   render() {
@@ -72,8 +49,8 @@ class ProfesorDatos extends Component {
       <div className="card">
         <div className="card-body">
           <form
-            id="formAlumno"
-            name="formAlumno"
+            id="formProfesor"
+            name="formProfesor"
             className="m-t-40"
             onSubmit={this.handleSubmit}
           >
@@ -142,6 +119,22 @@ class ProfesorDatos extends Component {
                     />
                   </div>
                 </div>
+                <div className="col-md-6">
+                  <div className="form-group">
+                    <label className="control-label">DNI</label>
+                    <input
+                      type="text"
+                      name="dni"
+                      id="dni"
+                      className="form-control"
+                      defaultValue={
+                        Object.keys(this.props.main).length !== 0
+                          ? this.props.main.dni
+                          : ""
+                      }
+                    />
+                  </div>
+                </div>
               </div>
               <div className="row">
                 <div className="col-md-6">
@@ -198,8 +191,8 @@ class ProfesorDatos extends Component {
                   <div className="form-group">
                     <label>Especialidad</label>
                     <select
-                      id="clases"
-                      name="clases"
+                      id="especialidad"
+                      name="especialidad"
                       className="form-control custom-select"
                       multiple
                       tabIndex="1"
