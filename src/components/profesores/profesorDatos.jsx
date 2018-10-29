@@ -203,7 +203,7 @@ class ProfesorDatos extends Component {
                       }
                     >
                       {this.props.select.map((row, i) => (
-                        <option key={i} value={row.pk}>
+                        <option key={i} value={row.id}>
                           {row.nombre}
                         </option>
                       ))}

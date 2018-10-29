@@ -5,7 +5,6 @@ class ClaseListado extends Component {
     if (Object.keys(this.props.data).length === 0) {
       return <h2>No hay datos</h2>;
     } else {
-      console.log(this.props);
       return (
         <div className="table-responsive">
           <table className="table table-hover">
@@ -24,9 +23,9 @@ class ClaseListado extends Component {
                 <tr
                   key={i}
                   className="row-click"
-                  onClick={() => this.props.detalle(row.pk)}
+                  onClick={() => this.props.detalle(row.id)}
                 >
-                  <td className="txt-oflo">{row.pk} </td>
+                  <td className="txt-oflo">{row.id} </td>
                   <td>
                     <span className="txt-oflo">{row.dia}</span>
                   </td>
@@ -38,7 +37,7 @@ class ClaseListado extends Component {
                   </td>
                   <td>
                     <span className="txt-oflo">
-                      {row.profesor.apellido + ", " + row.profesor.nombre}
+                      {row.profesor_.apellido + ", " + row.profesor_.nombre}
                     </span>
                   </td>
                   <td>

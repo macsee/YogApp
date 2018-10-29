@@ -20,6 +20,7 @@ class AlumnoDatos extends Component {
     formData.append("fecha_nac", event.target.fecha_nac.value);
     formData.append("tel", event.target.tel.value);
     formData.append("activo", event.target.alumno_activo.checked);
+    formData.append("membresia", event.target.membresia.value);
 
     const selectedValues = [...event.target.clases];
     selectedValues.forEach(elem => {
@@ -228,14 +229,14 @@ class AlumnoDatos extends Component {
                       }
                     >
                       {this.props.select.map((row, i) => (
-                        <option key={i} value={row.pk}>
+                        <option key={i} value={row.id}>
                           {row.dia +
                             " - " +
                             row.hora_inicio +
                             " - " +
-                            row.profesor.nombre +
+                            row.profesor_.nombre +
                             ", " +
-                            row.profesor.apellido +
+                            row.profesor_.apellido +
                             " - " +
                             row.nombre}
                         </option>

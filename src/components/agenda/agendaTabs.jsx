@@ -28,11 +28,19 @@ class AgendaTabs extends Component {
     return new Date(fecha.getTime() - (dow - dia) * 24 * 60 * 60 * 1000);
   };
 
-  formatDate = dia => {
-    let month = dia.getMonth();
+  formatDateComp = dia => {
+    let month = dia.getMonth() + 1;
     let day = dia.getDate();
-    if (dia.getMonth() < 10) month = "0" + month;
-    if (dia.getDate() < 10) day = "0" + day;
+    if (month < 10) month = "0" + month;
+    if (day < 10) day = "0" + day;
+    return dia.getFullYear() + "-" + month + "-" + day;
+  };
+
+  formatDate = dia => {
+    let month = dia.getMonth() + 1;
+    let day = dia.getDate();
+    if (month < 10) month = "0" + month;
+    if (day < 10) day = "0" + day;
     return day + "/" + month;
   };
 
@@ -152,25 +160,53 @@ class AgendaTabs extends Component {
         </Nav>
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="LU">
-            <AgendaTabsContent dia="LU" />
+            <AgendaTabsContent
+              dia={this.formatDateComp(
+                this.getWeekDayDate(this.props.fecha._d, 1)
+              )}
+            />
           </TabPane>
           <TabPane tabId="MA">
-            <AgendaTabsContent dia="MA" />
+            <AgendaTabsContent
+              dia={this.formatDateComp(
+                this.getWeekDayDate(this.props.fecha._d, 2)
+              )}
+            />
           </TabPane>
           <TabPane tabId="MI">
-            <AgendaTabsContent dia="MI" />
+            <AgendaTabsContent
+              dia={this.formatDateComp(
+                this.getWeekDayDate(this.props.fecha._d, 3)
+              )}
+            />
           </TabPane>
           <TabPane tabId="JU">
-            <AgendaTabsContent dia="JU" />
+            <AgendaTabsContent
+              dia={this.formatDateComp(
+                this.getWeekDayDate(this.props.fecha._d, 4)
+              )}
+            />
           </TabPane>
           <TabPane tabId="VI">
-            <AgendaTabsContent dia="VI" />
+            <AgendaTabsContent
+              dia={this.formatDateComp(
+                this.getWeekDayDate(this.props.fecha._d, 5)
+              )}
+            />
           </TabPane>
           <TabPane tabId="SA">
-            <AgendaTabsContent dia="SA" />
+            <AgendaTabsContent
+              dia={this.formatDateComp(
+                this.getWeekDayDate(this.props.fecha._d, 6)
+              )}
+            />
           </TabPane>
           <TabPane tabId="DO">
-            <AgendaTabsContent dia="DO" />
+            <AgendaTabsContent
+              dia={this.formatDateComp(
+                this.getWeekDayDate(this.props.fecha._d, 7)
+              )}
+            />
           </TabPane>
         </TabContent>
       </React.Fragment>

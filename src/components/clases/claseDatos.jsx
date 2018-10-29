@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { DBComponent } from "../../utils/dbComponent.jsx";
 
 class ClaseDatos extends Component {
   constructor(props) {
@@ -12,13 +11,13 @@ class ClaseDatos extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-
     const formData = new FormData();
     formData.append("nombre", event.target.nombre.value);
     formData.append("dia", event.target.dia.value);
     formData.append("hora_inicio", event.target.hora_inicio.value);
     formData.append("hora_fin", event.target.hora_fin.value);
     formData.append("profesor", event.target.profesor.value);
+    formData.append("cupo", event.target.cupo.value);
 
     this.setState({ ...this.state, texto_boton: "Guardando..." });
 
@@ -96,7 +95,7 @@ class ClaseDatos extends Component {
                       <option value="JU">Jueves</option>
                       <option value="VI">Viernes</option>
                       <option value="SA">Sabado</option>
-                      <option value="DO">Sabado</option>
+                      <option value="DO">Domingo</option>
                     </select>
                   </div>
                 </div>
@@ -115,32 +114,32 @@ class ClaseDatos extends Component {
                           : ""
                       }
                     >
-                      <option value="0800">08:00</option>
-                      <option value="0830">08:30</option>
-                      <option value="0900">09:00</option>
-                      <option value="0930">09:30</option>
-                      <option value="1000">10:00</option>
-                      <option value="1030">10:30</option>
-                      <option value="1100">11:00</option>
-                      <option value="1130">11:30</option>
-                      <option value="1200">12:00</option>
-                      <option value="1300">13:00</option>
-                      <option value="1330">13:30</option>
-                      <option value="1400">14:00</option>
-                      <option value="1430">14:30</option>
-                      <option value="1500">15:00</option>
-                      <option value="1530">15:30</option>
-                      <option value="1600">16:00</option>
-                      <option value="1630">16:30</option>
-                      <option value="1700">17:00</option>
-                      <option value="1730">17:30</option>
-                      <option value="1800">18:00</option>
-                      <option value="1830">18:30</option>
-                      <option value="1900">19:00</option>
-                      <option value="1930">19:30</option>
-                      <option value="2000">20:00</option>
-                      <option value="2030">20:30</option>
-                      <option value="2100">21:00</option>
+                      <option value="08:00">08:00</option>
+                      <option value="08:30">08:30</option>
+                      <option value="09:00">09:00</option>
+                      <option value="09:30">09:30</option>
+                      <option value="10:00">10:00</option>
+                      <option value="10:30">10:30</option>
+                      <option value="11:00">11:00</option>
+                      <option value="11:30">11:30</option>
+                      <option value="12:00">12:00</option>
+                      <option value="13:00">13:00</option>
+                      <option value="13:30">13:30</option>
+                      <option value="14:00">14:00</option>
+                      <option value="14:30">14:30</option>
+                      <option value="15:00">15:00</option>
+                      <option value="15:30">15:30</option>
+                      <option value="16:00">16:00</option>
+                      <option value="16:30">16:30</option>
+                      <option value="17:00">17:00</option>
+                      <option value="17:30">17:30</option>
+                      <option value="18:00">18:00</option>
+                      <option value="18:30">18:30</option>
+                      <option value="19:00">19:00</option>
+                      <option value="19:30">19:30</option>
+                      <option value="20:00">20:00</option>
+                      <option value="20:30">20:30</option>
+                      <option value="21:00">21:00</option>
                     </select>
                   </div>
                 </div>
@@ -159,32 +158,32 @@ class ClaseDatos extends Component {
                           : ""
                       }
                     >
-                      <option value="0800">08:00</option>
-                      <option value="0830">08:30</option>
-                      <option value="0900">09:00</option>
-                      <option value="0930">09:30</option>
-                      <option value="1000">10:00</option>
-                      <option value="1030">10:30</option>
-                      <option value="1100">11:00</option>
-                      <option value="1130">11:30</option>
-                      <option value="1200">12:00</option>
-                      <option value="1300">13:00</option>
-                      <option value="1330">13:30</option>
-                      <option value="1400">14:00</option>
-                      <option value="1430">14:30</option>
-                      <option value="1500">15:00</option>
-                      <option value="1530">15:30</option>
-                      <option value="1600">16:00</option>
-                      <option value="1630">16:30</option>
-                      <option value="1700">17:00</option>
-                      <option value="1730">17:30</option>
-                      <option value="1800">18:00</option>
-                      <option value="1830">18:30</option>
-                      <option value="1900">19:00</option>
-                      <option value="1930">19:30</option>
-                      <option value="2000">20:00</option>
-                      <option value="2030">20:30</option>
-                      <option value="2100">21:00</option>
+                      <option value="08:00">08:00</option>
+                      <option value="08:30">08:30</option>
+                      <option value="09:00">09:00</option>
+                      <option value="09:30">09:30</option>
+                      <option value="10:00">10:00</option>
+                      <option value="10:30">10:30</option>
+                      <option value="11:00">11:00</option>
+                      <option value="11:30">11:30</option>
+                      <option value="12:00">12:00</option>
+                      <option value="13:00">13:00</option>
+                      <option value="13:30">13:30</option>
+                      <option value="14:00">14:00</option>
+                      <option value="14:30">14:30</option>
+                      <option value="15:00">15:00</option>
+                      <option value="15:30">15:30</option>
+                      <option value="16:00">16:00</option>
+                      <option value="16:30">16:30</option>
+                      <option value="17:00">17:00</option>
+                      <option value="17:30">17:30</option>
+                      <option value="18:00">18:00</option>
+                      <option value="18:30">18:30</option>
+                      <option value="19:00">19:00</option>
+                      <option value="19:30">19:30</option>
+                      <option value="20:00">20:00</option>
+                      <option value="20:30">20:30</option>
+                      <option value="21:00">21:00</option>
                     </select>
                   </div>
                 </div>
@@ -200,16 +199,33 @@ class ClaseDatos extends Component {
                       tabIndex="1"
                       defaultValue={
                         Object.keys(this.props.main).length !== 0
-                          ? this.props.main.profesor
+                          ? this.props.main.profesor_
                           : ""
                       }
                     >
                       {this.props.select.map((row, i) => (
-                        <option key={i} value={row.pk}>
+                        <option key={i} value={row.id}>
                           {row.apellido + ", " + row.nombre}
                         </option>
                       ))}
                     </select>
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="form-group">
+                    <label>Cupo</label>
+                    <input
+                      type="number"
+                      name="cupo"
+                      id="cupo"
+                      className="form-control"
+                      placeholder=""
+                      defaultValue={
+                        Object.keys(this.props.main).length !== 0
+                          ? this.props.main.cupo
+                          : "10"
+                      }
+                    />
                   </div>
                 </div>
               </div>

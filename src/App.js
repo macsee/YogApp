@@ -172,7 +172,7 @@ class App extends Component {
                         active={""}
                         nombre={"Pagos"}
                         id={"pagos"}
-                        url_main={"/pagos/"}
+                        url_main={"/cuenta_corriente/"}
                         url_select={""}
                       >
                         <AlumnoPagos />

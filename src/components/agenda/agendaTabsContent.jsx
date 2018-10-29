@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ModalAlumno from "./modalAlumno";
+import { DBComponent } from "../../utils/dbComponent";
 // import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
 class Contenido extends Component {
@@ -11,6 +12,16 @@ class Contenido extends Component {
     };
     // this.child = React.createRef();
   }
+
+  setBadge = row => {
+    let restante = row.cupo - row.lista_alumnos.length;
+    let badge = " badge-success";
+
+    if (restante <= row.cupo / 2 && restante >= row.cupo / 3)
+      badge = " badge-warning";
+    if (restante <= row.cupo / 3) badge = " badge-danger";
+    return badge;
+  };
 
   showModal = row => {
     this.setState({ ...this.state, value: !this.state.value, data: row });
@@ -60,17 +71,21 @@ class Contenido extends Component {
                       onClick={() => this.showModal(row)}
                       className="row-click"
                     >
-                      <td className="txt-oflo">{row.hora_inicio}</td>
+                      <td className="txt-oflo">
+                        {row.hora_inicio} <br /> {row.hora_fin}
+                      </td>
                       <td>
-                        <span className="txt-oflo">{row.profesor.nombre}</span>
+                        <span className="txt-oflo">{row.profesor_.nombre}</span>
                       </td>
                       <td>
                         <span className="txt-oflo">{row.nombre}</span>
                       </td>
                       <td>
                         <h4>
-                          <span className="badge badge-pill badge-success">
-                            7
+                          <span
+                            className={"badge badge-pill" + this.setBadge(row)}
+                          >
+                            {row.cupo - row.lista_alumnos.length}
                           </span>
                         </h4>
                       </td>
@@ -90,32 +105,37 @@ class AgendaTabsContent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      error: null,
-      isLoaded: false,
-      items: []
+      resultData: null
     };
   }
 
+  getClases = dia => {
+    const db = new DBComponent();
+    db.getData("/clase_dia/?fecha=" + dia, x => {
+      this.setState({
+        ...this.state,
+        resultData: x
+      });
+    });
+  };
+
   componentDidMount() {
-    fetch("http://localhost:8000/clase_dia/?dia=" + this.props.dia, {})
-      .then(res => res.json())
-      .then(
-        result => {
-          this.setState({ ...this.state, isLoaded: true, items: result });
-        },
-        error => {
-          console.log(error);
-          this.setState({ ...this.state, isLoaded: true, error });
-        }
-      );
+    this.getClases(this.props.dia);
+  }
+
+  componentDidUpdate(prevProps) {
+    // Typical usage (don't forget to compare props):
+    if (this.props.dia !== prevProps.dia) {
+      this.getClases(this.props.dia);
+    }
   }
 
   render() {
-    if (this.state.isLoaded) {
-      if (this.state.error) {
+    if (this.state.resultData) {
+      if (this.state.resultData.error) {
         return <h2>Error de conexion</h2>;
       } else {
-        return <Contenido data={this.state.items} />;
+        return <Contenido data={this.state.resultData.items} />;
       }
     } else {
       return null;

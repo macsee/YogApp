@@ -20,9 +20,9 @@ class ProfesorListado extends Component {
                 <tr
                   key={i}
                   className="row-click"
-                  onClick={() => this.props.detalle(row.pk)}
+                  onClick={() => this.props.detalle(row.id)}
                 >
-                  <td className="txt-oflo">{row.pk} </td>
+                  <td className="txt-oflo">{row.id} </td>
                   <td>
                     <span className="txt-oflo">
                       {row.nombre + " " + row.apellido}

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-
 import { DBComponent } from "./dbComponent.jsx";
 
 class SectionDetailTab extends Component {
@@ -26,7 +25,7 @@ class SectionDetailTab extends Component {
     } else {
       db.saveData(this.props.url_main, formData, "POST", x => {
         callback(x);
-        this.props.history.push(this.props.url_detalle + x.items.pk + "/");
+        this.props.history.push(this.props.url_detalle + x.items.id + "/");
       });
     }
   };
