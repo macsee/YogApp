@@ -55,9 +55,10 @@ class ModalAlumno extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {this.props.data.lista_alumnos.map((row, i) => (
-                    <CheckboxAsistencias key={i} data={row} />
-                  ))}
+                  {this.props.data.lista_alumnos.map((row, i) =>
+                    console.log(row)
+                    // <CheckboxAsistencias key={i} data={row} />
+                  )}
                 </tbody>
               </table>
             ) : (
