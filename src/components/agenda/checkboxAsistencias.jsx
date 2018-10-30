@@ -12,38 +12,40 @@ class CheckboxAsistencias extends Component {
     return dia.getFullYear() + "-" + month + "-" + day;
   };
 
+  onChange = event => {
+    let array = {
+      fecha: this.formatDateComp(new Date()),
+      alumno: this.props.data.alumno_pk,
+      clase_registro: this.props.clase,
+      id: this.props.data.asist_pk
+    };
+
+    this.props.submit(array);
+  };
+
   handleSubmit = event => {
     const formData = new FormData();
 
     formData.append("fecha", this.formatDateComp(new Date()));
-    formData.append(
-      "alumno",
-      event.target.asistencia_ + this.props.data.alumno_pk
-    );
+    formData.append("alumno", this.props.data.alumno_pk);
     formData.append("clase_registro", this.props.clase);
 
     const db = new DBComponent();
-
-    if (this.props.data.asist_pk) {
-      console.log(
-        "Estaba Presente.. Cambio condicion de presente a: ",
-        event.target.checked
-      );
-      //   db.saveData("/asistencias/" + data.id_alumno, formData, "PUT", x => {
-      //     //   callback(x);
-      //   });
+    console.log(this.props);
+    if (event.target.checked) {
+      console.log("Tengo que guardar");
+      db.saveData("/asistencias/", formData, "POST", x => {
+        console.log(x);
+      });
       // } else {
       //   db.saveData("/asistencias/" + data.id_alumno, formData, "POST", x => {
       //     // callback(x);
       //     // this.props.history.push(this.props.url_detalle + x.items.id + "/");
       //   });
     } else {
-      console.log(
-        "No estaba Presente.. Cambio condicion de presente a: ",
-        event.target.checked
-      );
+      console.log("Tengo que borrar");
+      //   console.log("Unchecked");
       //   db.saveData("/asistencias/", formData, "POST", x => {
-      //     console.log(x);
       //   });
     }
   };
@@ -63,8 +65,8 @@ class CheckboxAsistencias extends Component {
                 className="custom-control-input"
                 id={"asistencia_" + this.props.data.alumno_pk}
                 name={"asistencia_" + this.props.data.alumno_pk}
-                defaultValue={this.props.data.presente}
-                onChange={this.handleSubmit}
+                defaultChecked={this.props.data.asist_pk}
+                onChange={this.onChange}
               />
               <label
                 className="custom-control-label todo-label"

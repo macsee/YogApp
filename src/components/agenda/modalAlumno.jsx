@@ -7,7 +7,8 @@ class ModalAlumno extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      modal: false
+      modal: false,
+      asistencias: new FormData()
     };
 
     this.toggle = this.toggle.bind(this);
@@ -19,7 +20,30 @@ class ModalAlumno extends Component {
     });
   }
 
+  add_remove = data => {
+    if (!this.state.asistencias.has(data.alumno)) {
+      console.log("Lo agrego..");
+      let items = this.state.asistencias;
+      items.set(data.alumno, data);
+      this.setState({ asistencias: items });
+    } else {
+      console.log("Lo saco...");
+      let items = this.state.asistencias;
+      items.delete(data.alumno);
+      this.setState({ asistencias: items });
+    }
+  };
+
+  save = () => {
+    let asistencias = new FormData();
+    const db = new DBComponent();
+    db.saveData("/asistencias/", asistencias, "POST", x => {
+      console.log(x);
+    });
+  };
+
   componentDidUpdate(prevProps) {
+    console.log(this.state.asistencias);
     // Typical usage (don't forget to compare props):
     if (this.props.estado !== prevProps.estado) {
       this.toggle();
@@ -55,10 +79,14 @@ class ModalAlumno extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {this.props.data.lista_alumnos.map((row, i) =>
-                    console.log(row)
-                    // <CheckboxAsistencias key={i} data={row} />
-                  )}
+                  {this.props.data.lista_alumnos.map((row, i) => (
+                    <CheckboxAsistencias
+                      key={i}
+                      data={row}
+                      clase={this.props.data.id}
+                      submit={this.add_remove}
+                    />
+                  ))}
                 </tbody>
               </table>
             ) : (
@@ -66,11 +94,7 @@ class ModalAlumno extends Component {
             )}
           </ModalBody>
           <ModalFooter>
-            <button
-              className="btn btn-info"
-              onClick={this.toggle}
-              type="submit"
-            >
+            <button className="btn btn-info" onClick={this.save}>
               Guardar
             </button>
             <Button color="secondary" onClick={this.toggle}>
