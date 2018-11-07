@@ -24,7 +24,7 @@ class ModalAlumno extends Component {
     if (!this.state.asistencias.has(data.alumno)) {
       console.log("Lo agrego..");
       let items = this.state.asistencias;
-      items.set(data.alumno, data);
+      items.set(data.alumno, JSON.stringify(data));
       this.setState({ asistencias: items });
     } else {
       console.log("Lo saco...");
@@ -35,15 +35,19 @@ class ModalAlumno extends Component {
   };
 
   save = () => {
-    let asistencias = new FormData();
     const db = new DBComponent();
-    db.saveData("/asistencias/", asistencias, "POST", x => {
-      console.log(x);
+    db.saveData("/asistencias/set", this.state.asistencias, "POST", x => {
+      this.toggle();
+      this.fetch("94");
     });
   };
 
+  fetch = id => {
+    const db = new DBComponent();
+    db.getData("/asistencias/get/?clase=" + id, x => {});
+  };
+
   componentDidUpdate(prevProps) {
-    console.log(this.state.asistencias);
     // Typical usage (don't forget to compare props):
     if (this.props.estado !== prevProps.estado) {
       this.toggle();

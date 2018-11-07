@@ -23,33 +23,6 @@ class CheckboxAsistencias extends Component {
     this.props.submit(array);
   };
 
-  handleSubmit = event => {
-    const formData = new FormData();
-
-    formData.append("fecha", this.formatDateComp(new Date()));
-    formData.append("alumno", this.props.data.alumno_pk);
-    formData.append("clase_registro", this.props.clase);
-
-    const db = new DBComponent();
-    console.log(this.props);
-    if (event.target.checked) {
-      console.log("Tengo que guardar");
-      db.saveData("/asistencias/", formData, "POST", x => {
-        console.log(x);
-      });
-      // } else {
-      //   db.saveData("/asistencias/" + data.id_alumno, formData, "POST", x => {
-      //     // callback(x);
-      //     // this.props.history.push(this.props.url_detalle + x.items.id + "/");
-      //   });
-    } else {
-      console.log("Tengo que borrar");
-      //   console.log("Unchecked");
-      //   db.saveData("/asistencias/", formData, "POST", x => {
-      //   });
-    }
-  };
-
   render() {
     return (
       <tr>
