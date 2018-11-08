@@ -8,7 +8,8 @@ class ModalAlumno extends Component {
     super(props);
     this.state = {
       modal: false,
-      asistencias: new FormData()
+      asistencias: new FormData(),
+      clase: ""
     };
 
     this.toggle = this.toggle.bind(this);
@@ -32,19 +33,22 @@ class ModalAlumno extends Component {
       items.delete(data.alumno);
       this.setState({ asistencias: items });
     }
+    this.setState({ ...this.state, clase: data.clase_registro });
   };
 
   save = () => {
     const db = new DBComponent();
     db.saveData("/asistencias/set", this.state.asistencias, "POST", x => {
       this.toggle();
-      this.fetch("94");
+      this.fetch(this.state.clase);
     });
   };
 
   fetch = id => {
     const db = new DBComponent();
-    db.getData("/asistencias/get/?clase=" + id, x => {});
+    db.getData("/clase_dia/" + id, x => {
+      console.log(x);
+    });
   };
 
   componentDidUpdate(prevProps) {
