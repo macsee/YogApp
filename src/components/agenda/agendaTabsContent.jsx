@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import ModalAlumno from "./modalAlumno";
 import { DBComponent } from "../../utils/dbComponent";
+import AgendaTabsRow from "./agendaTabsContentRow";
+import ModalAlumno from "./modalAlumno";
 // import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
 class Contenido extends Component {
@@ -8,9 +9,9 @@ class Contenido extends Component {
     super(props);
     this.state = {
       value: false,
-      data: []
+      data: [],
+      lista_alumnos: []
     };
-    // this.child = React.createRef();
   }
 
   setBadge = row => {
@@ -24,20 +25,35 @@ class Contenido extends Component {
   };
 
   showModal = row => {
-    this.setState({ ...this.state, value: !this.state.value, data: row });
+    this.setState({ ...this.state, value: !this.state.value });
   };
-  // showModal = id => {
-  //   this.child.current.toggle(id);
+
+  // actualizar_lista_alumnos = data => {
+  //   this.setState({ ...this.state, value: !this.state.value, data: data });
   // };
 
+  // componentDidMount() {
+  //   if (Object.keys(this.props.data).length !== 0) {
+  //     this.setState({
+  //       ...this.state,
+  //       data: this.props.data,
+  //       lista_alumnos: this.props.data.lista_alumnos
+  //     });
+  //   }
+  // }
+
   render() {
-    if (Object.keys(this.props.data).length === 0) {
+    if (!this.state.data) {
       return <h2>No hay datos</h2>;
     } else {
       return (
         <React.Fragment>
           <div>
-            <ModalAlumno estado={this.state.value} data={this.state.data} />
+            {/* <ModalAlumno
+              estado={this.state.value}
+              data={this.props.data}
+              lista_alumnos={this.props.data.lista_alumnos}
+            /> */}
           </div>
           <div className="card">
             <div className="card-body">
@@ -66,30 +82,37 @@ class Contenido extends Component {
                 </thead>
                 <tbody>
                   {this.props.data.map((row, i) => (
-                    <tr
-                      key={i}
-                      onClick={() => this.showModal(row)}
-                      className="row-click"
-                    >
-                      <td className="txt-oflo">
-                        {row.hora_inicio} <br /> {row.hora_fin}
-                      </td>
-                      <td>
-                        <span className="txt-oflo">{row.profesor_.nombre}</span>
-                      </td>
-                      <td>
-                        <span className="txt-oflo">{row.nombre}</span>
-                      </td>
-                      <td>
-                        <h4>
-                          <span
-                            className={"badge badge-pill" + this.setBadge(row)}
-                          >
-                            {row.cupo - row.lista_alumnos.length}
-                          </span>
-                        </h4>
-                      </td>
-                    </tr>
+                    //   <tr
+                    //     key={i}
+                    //     onClick={this.showModal}
+                    //     className="row-click"
+                    //   >
+                    //     <td className="txt-oflo">
+                    //       {row.hora_inicio} <br /> {row.hora_fin}
+                    //     </td>
+                    //     <td>
+                    //       <span className="txt-oflo">
+                    //         {row.profesor_.nombre}
+                    //       </span>
+                    //     </td>
+                    //     <td>
+                    //       <span className="txt-oflo">{row.nombre}</span>
+                    //     </td>
+                    //     <td>
+                    //       <h4>
+                    //         <span
+                    //           className={
+                    //             "badge badge-pill" + this.setBadge(row)
+                    //           }
+                    //         >
+                    //           {row.cupo - row.lista_alumnos.length}
+                    //         </span>
+                    //       </h4>
+                    //       <ModalAlumno estado={this.state.value} data={row} />
+                    //     </td>
+                    //   </tr>
+                    // )
+                    <AgendaTabsRow key={i} data={row} />
                   ))}
                 </tbody>
               </table>

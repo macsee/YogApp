@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { DBComponent } from "../../utils/dbComponent.jsx";
 
 class CheckboxAsistencias extends Component {
-  state = {};
+  state = {
+    checked: false
+  };
 
   formatDateComp = dia => {
     let month = dia.getMonth() + 1;
@@ -10,6 +12,12 @@ class CheckboxAsistencias extends Component {
     if (month < 10) month = "0" + month;
     if (day < 10) day = "0" + day;
     return dia.getFullYear() + "-" + month + "-" + day;
+  };
+
+  onClick = event => {
+    // Esto lo tengo que hacer porque se propaga el onClick de agendaTabsContentRow,
+    // entonces se ejecuta showModal() cada vez que se detecta un "click"
+    event.stopPropagation();
   };
 
   onChange = event => {
@@ -22,6 +30,22 @@ class CheckboxAsistencias extends Component {
 
     this.props.submit(array);
   };
+
+  componentDidMount() {
+    console.log("Monto");
+    this.setState({
+      ...this.state,
+      checked: this.props.data.asist_pk
+    });
+  }
+
+  componentWillUnmount() {
+    // Remember state for the next mount
+    this.setState({
+      ...this.state,
+      checked: this.state.checked
+    });
+  }
 
   render() {
     return (
@@ -38,8 +62,9 @@ class CheckboxAsistencias extends Component {
                 className="custom-control-input"
                 id={"asistencia_" + this.props.data.alumno_pk}
                 name={"asistencia_" + this.props.data.alumno_pk}
-                defaultChecked={this.props.data.asist_pk}
+                defaultChecked={this.state.checked || this.props.data.presente}
                 onChange={this.onChange}
+                onClick={this.onClick}
               />
               <label
                 className="custom-control-label todo-label"

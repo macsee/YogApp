@@ -8,6 +8,8 @@ class ModalAlumno extends Component {
     super(props);
     this.state = {
       modal: false,
+      lista_alumnos: [],
+      lista_alumnos_temp: [],
       asistencias: new FormData(),
       clase: ""
     };
@@ -17,45 +19,63 @@ class ModalAlumno extends Component {
 
   toggle() {
     this.setState({
+      ...this.state,
       modal: !this.state.modal
     });
   }
 
   add_remove = data => {
-    if (!this.state.asistencias.has(data.alumno)) {
-      console.log("Lo agrego..");
-      let items = this.state.asistencias;
-      items.set(data.alumno, JSON.stringify(data));
-      this.setState({ asistencias: items });
-    } else {
-      console.log("Lo saco...");
-      let items = this.state.asistencias;
-      items.delete(data.alumno);
-      this.setState({ asistencias: items });
-    }
-    this.setState({ ...this.state, clase: data.clase_registro });
+    let items = this.state.lista_alumnos.map(object => ({ ...object }));
+
+    items.map((row, i) => {
+      if (row.alumno_pk == data.alumno) {
+        row.presente = !row.presente;
+      }
+    });
+
+    this.setState({ ...this.state, lista_alumnos_temp: items }, function() {
+      let items_as = new FormData();
+
+      if (!this.state.asistencias.has(data.alumno)) {
+        console.log("Lo agrego..");
+        items_as.set(data.alumno, JSON.stringify(data));
+        this.setState({ ...this.state, asistencias: items_as });
+      } else {
+        console.log("Lo saco...");
+        items_as.delete(data.alumno);
+        this.setState({ ...this.state, asistencias: items_as });
+      }
+    });
   };
 
   save = () => {
-    const db = new DBComponent();
-    db.saveData("/asistencias/set", this.state.asistencias, "POST", x => {
-      this.toggle();
-      this.fetch(this.state.clase);
-    });
-  };
-
-  fetch = id => {
-    const db = new DBComponent();
-    db.getData("/clase_dia/" + id, x => {
-      console.log(x);
-    });
+    this.setState(
+      {
+        ...this.state,
+        lista_alumnos: this.state.lista_alumnos_temp
+      },
+      function() {
+        const db = new DBComponent();
+        db.saveData("/asistencias/set", this.state.asistencias, "POST", x => {
+          this.toggle();
+        });
+      }
+    );
   };
 
   componentDidUpdate(prevProps) {
     // Typical usage (don't forget to compare props):
     if (this.props.estado !== prevProps.estado) {
+      // console.log(this.state.lista_alumnos);
       this.toggle();
     }
+  }
+
+  componentDidMount() {
+    this.setState({
+      ...this.state,
+      lista_alumnos: this.props.data.lista_alumnos
+    });
   }
 
   render() {
@@ -76,8 +96,8 @@ class ModalAlumno extends Component {
               : ""}
           </ModalHeader>
           <ModalBody>
-            {Object.keys(this.props.data).length !== 0 &&
-            this.props.data.lista_alumnos.length !== 0 ? (
+            {this.state.lista_alumnos &&
+            this.state.lista_alumnos.length !== 0 ? (
               <table className="table table-hover">
                 <thead>
                   <tr>
@@ -87,7 +107,7 @@ class ModalAlumno extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {this.props.data.lista_alumnos.map((row, i) => (
+                  {this.state.lista_alumnos.map((row, i) => (
                     <CheckboxAsistencias
                       key={i}
                       data={row}
