@@ -31,16 +31,19 @@ class AgendaTabsRow extends Component {
     });
   };
 
-  //   actualizar_lista_alumnos = data => {
-  //     this.setState({
-  //       ...this.state,
-  //       lista_alumnos: data,
-  //       data: this.state.data
-  //     });
-  //   };
-
-  componentWillMount() {
+  componentDidMount() {
     if (Object.keys(this.props.data).length !== 0) {
+      this.setState({
+        ...this.state,
+        lista_alumnos: this.props.data.lista_alumnos,
+        data: this.props.data
+      });
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    // Typical usage (don't forget to compare props):
+    if (this.props.data.fecha !== prevProps.data.fecha) {
       this.setState({
         ...this.state,
         lista_alumnos: this.props.data.lista_alumnos,
@@ -69,11 +72,8 @@ class AgendaTabsRow extends Component {
               </span>
             </h4>
             <div>
-              <ModalAlumno
-                estado={this.state.value}
-                data={this.state.data}
-                lista_alumnos={this.state.lista_alumnos}
-              />
+              {/* {console.log(this.state.data)} */}
+              <ModalAlumno estado={this.state.value} data={this.state.data} />
             </div>
           </td>
         </tr>

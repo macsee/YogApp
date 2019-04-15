@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { DBComponent } from "../../utils/dbComponent.jsx";
+import * as utils from "../../utils/utils.js";
 
 class AlumnoDatos extends Component {
   constructor(props) {
@@ -17,6 +18,8 @@ class AlumnoDatos extends Component {
     formData.append("nombre", event.target.nombre.value);
     formData.append("apellido", event.target.apellido.value);
     formData.append("dni", event.target.dni.value);
+    formData.append("ciudad", event.target.ciudad.value);
+    formData.append("direccion", event.target.direccion.value);
     formData.append("fecha_nac", event.target.fecha_nac.value);
     formData.append("tel", event.target.tel.value);
     formData.append("activo", event.target.alumno_activo.checked);
@@ -37,6 +40,7 @@ class AlumnoDatos extends Component {
           clase_boton: "btn btn-danger"
         });
       } else {
+        // utils.printFormData(formData);
         this.setState({
           ...this.state,
           texto_boton: "Guardar",

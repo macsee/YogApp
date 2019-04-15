@@ -1,17 +1,9 @@
 import React, { Component } from "react";
-import { DBComponent } from "../../utils/dbComponent.jsx";
+import * as utils from "../../utils/utils.js";
 
 class CheckboxAsistencias extends Component {
   state = {
     checked: false
-  };
-
-  formatDateComp = dia => {
-    let month = dia.getMonth() + 1;
-    let day = dia.getDate();
-    if (month < 10) month = "0" + month;
-    if (day < 10) day = "0" + day;
-    return dia.getFullYear() + "-" + month + "-" + day;
   };
 
   onClick = event => {
@@ -21,31 +13,19 @@ class CheckboxAsistencias extends Component {
   };
 
   onChange = event => {
-    let array = {
-      fecha: this.formatDateComp(new Date()),
-      alumno: this.props.data.alumno_pk,
-      clase_registro: this.props.clase,
-      id: this.props.data.asist_pk
-    };
-
-    this.props.submit(array);
+    this.props.submit(this.props.data.alumno_pk);
   };
 
-  componentDidMount() {
-    console.log("Monto");
-    this.setState({
-      ...this.state,
-      checked: this.props.data.asist_pk
-    });
-  }
+  // componentWillMount() {
+  //   console.log(this.props.data);
+  // }
 
-  componentWillUnmount() {
-    // Remember state for the next mount
-    this.setState({
-      ...this.state,
-      checked: this.state.checked
-    });
-  }
+  // componentWillUnmount() {
+  //   this.setState({
+  //     ...this.state,
+  //     checked: this.state.checked
+  //   });
+  // }
 
   render() {
     return (
@@ -62,9 +42,12 @@ class CheckboxAsistencias extends Component {
                 className="custom-control-input"
                 id={"asistencia_" + this.props.data.alumno_pk}
                 name={"asistencia_" + this.props.data.alumno_pk}
-                defaultChecked={this.state.checked || this.props.data.presente}
+                defaultChecked={this.props.data.presente}
                 onChange={this.onChange}
                 onClick={this.onClick}
+                disabled={
+                  this.props.data.fecha !== utils.formatDateComp(new Date())
+                }
               />
               <label
                 className="custom-control-label todo-label"

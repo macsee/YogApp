@@ -28,33 +28,12 @@ class Contenido extends Component {
     this.setState({ ...this.state, value: !this.state.value });
   };
 
-  // actualizar_lista_alumnos = data => {
-  //   this.setState({ ...this.state, value: !this.state.value, data: data });
-  // };
-
-  // componentDidMount() {
-  //   if (Object.keys(this.props.data).length !== 0) {
-  //     this.setState({
-  //       ...this.state,
-  //       data: this.props.data,
-  //       lista_alumnos: this.props.data.lista_alumnos
-  //     });
-  //   }
-  // }
-
   render() {
     if (!this.state.data) {
       return <h2>No hay datos</h2>;
     } else {
       return (
         <React.Fragment>
-          <div>
-            {/* <ModalAlumno
-              estado={this.state.value}
-              data={this.props.data}
-              lista_alumnos={this.props.data.lista_alumnos}
-            /> */}
-          </div>
           <div className="card">
             <div className="card-body">
               <div className="float-left">
@@ -81,37 +60,8 @@ class Contenido extends Component {
                   </tr>
                 </thead>
                 <tbody>
+                  {/* {console.log(this.props.data)} */}
                   {this.props.data.map((row, i) => (
-                    //   <tr
-                    //     key={i}
-                    //     onClick={this.showModal}
-                    //     className="row-click"
-                    //   >
-                    //     <td className="txt-oflo">
-                    //       {row.hora_inicio} <br /> {row.hora_fin}
-                    //     </td>
-                    //     <td>
-                    //       <span className="txt-oflo">
-                    //         {row.profesor_.nombre}
-                    //       </span>
-                    //     </td>
-                    //     <td>
-                    //       <span className="txt-oflo">{row.nombre}</span>
-                    //     </td>
-                    //     <td>
-                    //       <h4>
-                    //         <span
-                    //           className={
-                    //             "badge badge-pill" + this.setBadge(row)
-                    //           }
-                    //         >
-                    //           {row.cupo - row.lista_alumnos.length}
-                    //         </span>
-                    //       </h4>
-                    //       <ModalAlumno estado={this.state.value} data={row} />
-                    //     </td>
-                    //   </tr>
-                    // )
                     <AgendaTabsRow key={i} data={row} />
                   ))}
                 </tbody>

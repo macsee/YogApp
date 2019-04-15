@@ -163,6 +163,7 @@ class App extends Component {
                         active={"active"}
                         nombre={"Datos"}
                         id={"datos"}
+                        url_new={"/alumnos/create/"}
                         url_main={"/alumnos/"}
                         url_select={"/clases/"}
                       >

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { DBComponent } from "../../utils/dbComponent.jsx";
 import CheckboxAsistencias from "./checkboxAsistencias";
+import * as utils from "../../utils/utils.js";
 
 class ModalAlumno extends Component {
   constructor(props) {
@@ -24,28 +25,18 @@ class ModalAlumno extends Component {
     });
   }
 
-  add_remove = data => {
-    let items = this.state.lista_alumnos.map(object => ({ ...object }));
-
-    items.map((row, i) => {
-      if (row.alumno_pk == data.alumno) {
-        row.presente = !row.presente;
+  add_remove = alumno => {
+    let items = this.state.lista_alumnos_temp.map(e => {
+      if (e.alumno_pk === alumno) {
+        e = {
+          ...e,
+          presente: !e.presente
+        };
       }
+      return e;
     });
 
-    this.setState({ ...this.state, lista_alumnos_temp: items }, function() {
-      let items_as = new FormData();
-
-      if (!this.state.asistencias.has(data.alumno)) {
-        console.log("Lo agrego..");
-        items_as.set(data.alumno, JSON.stringify(data));
-        this.setState({ ...this.state, asistencias: items_as });
-      } else {
-        console.log("Lo saco...");
-        items_as.delete(data.alumno);
-        this.setState({ ...this.state, asistencias: items_as });
-      }
-    });
+    this.setState({ ...this.state, lista_alumnos_temp: items });
   };
 
   save = () => {
@@ -55,27 +46,48 @@ class ModalAlumno extends Component {
         lista_alumnos: this.state.lista_alumnos_temp
       },
       function() {
+        let items_as = new FormData();
+        this.state.lista_alumnos_temp.map(e => {
+          items_as.append(e.alumno_pk, JSON.stringify(e));
+        });
         const db = new DBComponent();
-        db.saveData("/asistencias/set", this.state.asistencias, "POST", x => {
+        db.saveData("/asistencias/set", items_as, "POST", x => {
           this.toggle();
         });
       }
     );
   };
 
+  reload_alumnos = () => {
+    let items = this.props.data.lista_alumnos.map(e => {
+      e = {
+        ...e,
+        fecha: this.props.data.fecha,
+        clase_registro: this.props.data.id
+      };
+      return e;
+    });
+
+    this.setState({
+      ...this.state,
+      lista_alumnos: items,
+      lista_alumnos_temp: items
+    });
+  };
+
   componentDidUpdate(prevProps) {
     // Typical usage (don't forget to compare props):
     if (this.props.estado !== prevProps.estado) {
-      // console.log(this.state.lista_alumnos);
       this.toggle();
+    }
+
+    if (this.props.data.fecha !== prevProps.data.fecha) {
+      this.reload_alumnos();
     }
   }
 
   componentDidMount() {
-    this.setState({
-      ...this.state,
-      lista_alumnos: this.props.data.lista_alumnos
-    });
+    this.reload_alumnos();
   }
 
   render() {
@@ -111,7 +123,6 @@ class ModalAlumno extends Component {
                     <CheckboxAsistencias
                       key={i}
                       data={row}
-                      clase={this.props.data.id}
                       submit={this.add_remove}
                     />
                   ))}
@@ -122,7 +133,13 @@ class ModalAlumno extends Component {
             )}
           </ModalBody>
           <ModalFooter>
-            <button className="btn btn-info" onClick={this.save}>
+            <button
+              className="btn btn-info"
+              onClick={this.save}
+              disabled={
+                this.props.data.fecha !== utils.formatDateComp(new Date())
+              }
+            >
               Guardar
             </button>
             <Button color="secondary" onClick={this.toggle}>
